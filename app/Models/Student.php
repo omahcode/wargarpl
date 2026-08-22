@@ -22,7 +22,7 @@ class Student extends Model
     protected function casts(): array
     {
         return [
-            // 'nik' => 'encrypted',
+            'nik' => 'encrypted',
         ];
     }
 

@@ -272,7 +272,7 @@ class ImportExportController extends Controller
                         'mother_name' => $row['mother_name'],
                         'mother_occupation' => $row['mother_occupation'],
                         
-                        'nik' => $row['nik'] ? encrypt($row['nik']) : null,
+                        'nik' => $row['nik'] ?: null,
                     ]);
 
                     // Login Account (Password default: Tanggal Lahir DDMMYYYY)
@@ -515,7 +515,7 @@ class ImportExportController extends Controller
                         'father_occupation' => $row['father_occupation'],
                         'mother_name' => $row['mother_name'],
                         'mother_occupation' => $row['mother_occupation'],
-                        'nik' => $row['nik'] ? encrypt($row['nik']) : null,
+                        'nik' => $row['nik'] ?: null,
                     ]);
 
                     // Login Account (Password default: Tanggal Lahir DDMMYYYY)

@@ -126,7 +126,7 @@ class StudentController extends Controller
                 'uuid' => Str::uuid()->toString(),
                 'nis' => $request->input('nis'),
                 'nisn' => $request->input('nisn'),
-                'nik' => $request->filled('nik') ? encrypt($request->input('nik')) : null,
+                'nik' => $request->input('nik') ?: null,
                 'full_name' => $request->input('full_name'),
                 'nickname' => $request->input('nickname'),
                 'gender' => $request->input('gender'),
@@ -255,7 +255,7 @@ class StudentController extends Controller
             $student->update([
                 'nis' => $request->input('nis'),
                 'nisn' => $request->input('nisn'),
-                'nik' => $request->filled('nik') ? encrypt($request->input('nik')) : null,
+                'nik' => $request->input('nik') ?: null,
                 'full_name' => $request->input('full_name'),
                 'nickname' => $request->input('nickname'),
                 'gender' => $request->input('gender'),
