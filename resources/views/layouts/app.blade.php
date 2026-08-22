@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') - SIDATA NEPER</title>
+    <title>@yield('title', 'Dashboard') - SobatData Neper</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('logo-smk.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -47,7 +47,7 @@
             <div class="flex items-center gap-3">
                 <img src="{{ asset('logo-smk.svg') }}" class="w-8 h-8 object-contain" alt="Logo SMK" />
                 <div>
-                    <h1 class="text-xs font-bold text-white tracking-wide">SIDATA NEPER</h1>
+                    <h1 class="text-xs font-bold text-white tracking-wide">SobatData Neper</h1>
                     <p class="text-[9px] text-slate-500 font-semibold uppercase tracking-wider">SMKN 1 Cirebon</p>
                 </div>
             </div>

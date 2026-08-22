@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard - SIDATA NEPER')
+@section('title', 'Dashboard - SobatData Neper')
 
 @section('content')
 <div class="space-y-6">
@@ -11,7 +11,7 @@
             <h2 class="text-2xl font-bold text-slate-900 font-display">Ringkasan Data</h2>
             <p class="text-sm text-slate-400 font-medium mt-0.5">
                 @if($activeYear)
-                    Tahun Ajaran {{ $activeYear->name }} &bull; Data terintegrasi SIDATA NEPER
+                    Tahun Ajaran {{ $activeYear->name }} &bull; Data terintegrasi SobatData Neper
                 @else
                     Pusat Data Terintegrasi SMK Negeri 1 Cirebon
                 @endif

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dokumentasi API - SIDATA NEPER')
+@section('title', 'Dokumentasi API - SobatData Neper')
 
 @section('content')
 <div class="space-y-6" x-data="{ activeSection: 'start', copiedKey: null }">
@@ -9,7 +9,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
             <h2 class="text-2xl font-bold text-slate-900">Dokumentasi REST API</h2>
-            <p class="text-sm text-slate-400 font-medium mt-0.5">SIDATA NEPER &bull; Pusat Data Terintegrasi SMK Negeri 1 Cirebon</p>
+            <p class="text-sm text-slate-400 font-medium mt-0.5">SobatData Neper &bull; Pusat Data Terintegrasi SMK Negeri 1 Cirebon</p>
         </div>
         <div class="flex gap-2">
             <a href="{{ route('admin.clients.index') }}" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-semibold transition">
@@ -51,8 +51,8 @@
             <div x-show="activeSection === 'start'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900">🚀 Cara Menggunakan API SIDATA NEPER</h3>
-                        <p class="text-sm text-slate-500 mt-1">Ikuti langkah-langkah berikut untuk mengintegrasikan data dari SIDATA NEPER ke aplikasi Anda.</p>
+                        <h3 class="text-lg font-bold text-slate-900">🚀 Cara Menggunakan API SobatData Neper</h3>
+                        <p class="text-sm text-slate-500 mt-1">Ikuti langkah-langkah berikut untuk mengintegrasikan data dari SobatData Neper ke aplikasi Anda.</p>
                     </div>
 
                     <div class="space-y-4">
@@ -336,7 +336,7 @@
                                     ['403','Forbidden','Scope tidak mencukupi. Minta admin tambahkan scope yang diperlukan.', 'bg-orange-50 text-orange-700'],
                                     ['404','Not Found','Data yang dicari tidak ditemukan.', 'bg-slate-50 text-slate-600'],
                                     ['429','Too Many Requests','Rate limit tercapai (default: 60 req/menit). Tunggu sebentar.', 'bg-red-50 text-red-700'],
-                                    ['500','Server Error','Kesalahan internal server. Hubungi admin SIDATA NEPER.', 'bg-red-50 text-red-700'],
+                                    ['500','Server Error','Kesalahan internal server. Hubungi admin SobatData Neper.', 'bg-red-50 text-red-700'],
                                 ] as [$code, $status, $desc, $badge])
                                 <tr class="hover:bg-slate-50">
                                     <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-black border {{ $badge }}">{{ $code }}</span></td>
@@ -451,7 +451,7 @@ if result['success']:
                     <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-800">
                         <strong>🌐 Catatan CORS untuk Frontend Web:</strong><br>
                         Jika menggunakan JavaScript di browser (React, Vue, dsb.), panggil API dari <strong>backend server</strong> Anda (server-side), bukan langsung dari browser. Menyimpan <code>X-Client-Secret</code> di frontend publik adalah risiko keamanan.<br><br>
-                        Alternatifnya, minta admin SIDATA NEPER untuk mengaktifkan CORS whitelist untuk domain Anda.
+                        Alternatifnya, minta admin SobatData Neper untuk mengaktifkan CORS whitelist untuk domain Anda.
                     </div>
                 </div>
             </div>

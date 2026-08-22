@@ -1,6 +1,6 @@
-# SIDATA NEPER (Sistem Informasi Data Terpadu Neper)
+# SobatData Neper (SobatData Neper)
 
-**SIDATA NEPER** adalah platform web Single Identity & Master Data Portal terintegrasi untuk **SMK Negeri 1 Cirebon**. Sistem ini dirancang untuk mempermudah sinkronisasi data Dapodik, pengelolaan data akademik (Siswa, Guru, Tendik, Rombel, Jurusan), verifikasi mandiri profil siswa, serta integrasi data dengan aplikasi eksternal sekolah via REST API & Webhook secara aman.
+**SobatData Neper** adalah platform web Single Identity & Master Data Portal terintegrasi untuk **SMK Negeri 1 Cirebon**. Sistem ini dirancang untuk mempermudah sinkronisasi data Dapodik, pengelolaan data akademik (Siswa, Guru, Tendik, Rombel, Jurusan), verifikasi mandiri profil siswa, serta integrasi data dengan aplikasi eksternal sekolah via REST API & Webhook secara aman.
 
 ---
 

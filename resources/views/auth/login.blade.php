@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SIDATA NEPER</title>
+    <title>Login - SobatData Neper</title>
     <link rel="icon" type="image/svg+xml" href="{{ asset('logo-smk.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -19,7 +19,7 @@
         <!-- Logo and Heading -->
         <div class="text-center mb-8">
             <img src="{{ asset('logo-smk.svg') }}" class="w-16 h-16 object-contain mx-auto mb-4" alt="Logo SMK" />
-            <h2 class="text-2xl font-bold tracking-tight text-slate-900">SIDATA NEPER</h2>
+            <h2 class="text-2xl font-bold tracking-tight text-slate-900">SobatData Neper</h2>
             <p class="text-xs text-slate-500 font-semibold mt-1">Sistem Informasi Data Terpadu Neper<br>SMK Negeri 1 Cirebon</p>
         </div>
 

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Rombel: {{ $class->name }} - SIDATA NEPER')
+@section('title', 'Detail Rombel: {{ $class->name }} - SobatData Neper')
 
 @section('content')
 <div class="space-y-6">
