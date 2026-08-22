@@ -210,7 +210,7 @@ class DatabaseSeeder extends Seeder
                 'uuid' => $uuid,
                 'nis' => $nis,
                 'nisn' => $nisn,
-                'nik' => encrypt('32740' . ($i + 10) . '0101000' . $i),
+                'nik' => '32740' . ($i + 10) . '0101000' . $i,
                 'full_name' => $fullName,
                 'nickname' => $nickname,
                 'gender' => $gender,
