@@ -47,7 +47,7 @@ class EmployeeController extends Controller
         $request->validate([
             'nip' => 'required|numeric|unique:employees,nip',
             'nuptk' => 'nullable|numeric|unique:employees,nuptk',
-            'nik' => 'required|numeric|unique:employees,nik',
+            'nik' => 'nullable|numeric|unique:employees,nik',
             'full_name' => 'required|string|max:100',
             'gender' => 'required|in:L,P',
             'ptk_type' => 'required|string',
@@ -60,7 +60,7 @@ class EmployeeController extends Controller
         ], [
             'nip.required' => 'NIP wajib diisi.',
             'nip.unique' => 'NIP sudah terdaftar.',
-            'nik.required' => 'NIK wajib diisi.',
+            'nik.numeric' => 'NIK harus berupa angka.',
             'full_name.required' => 'Nama lengkap wajib diisi.',
             'gender.required' => 'Jenis Kelamin wajib diisi.',
             'email.required' => 'Email wajib diisi.',
@@ -146,7 +146,7 @@ class EmployeeController extends Controller
         $request->validate([
             'nip' => 'required|numeric|unique:employees,nip,' . $employee->id,
             'nuptk' => 'nullable|numeric|unique:employees,nuptk,' . $employee->id,
-            'nik' => 'required|numeric|unique:employees,nik,' . $employee->id,
+            'nik' => 'nullable|numeric|unique:employees,nik,' . $employee->id,
             'full_name' => 'required|string|max:100',
             'gender' => 'required|in:L,P',
             'ptk_type' => 'required|string',
