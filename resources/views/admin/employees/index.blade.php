@@ -51,10 +51,9 @@
                     class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none text-sm font-medium transition bg-slate-50/50 focus:bg-white"
                 >
                     <option value="">Semua Jenis</option>
-                    <option value="Guru" {{ $typeFilter == 'Guru' ? 'selected' : '' }}>Guru</option>
-                    <option value="Tenaga Administrasi" {{ $typeFilter == 'Tenaga Administrasi' ? 'selected' : '' }}>Tenaga Administrasi</option>
-                    <option value="Teknisi" {{ $typeFilter == 'Teknisi' ? 'selected' : '' }}>Teknisi</option>
-                    <option value="Laboran" {{ $typeFilter == 'Laboran' ? 'selected' : '' }}>Laboran</option>
+                    @foreach($ptkTypes as $type)
+                        <option value="{{ $type->name }}" {{ $typeFilter == $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
+                    @endforeach
                 </select>
             </div>
 

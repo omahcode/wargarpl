@@ -118,7 +118,7 @@
                     </div>
                     <div>
                         <span class="text-slate-400 block mb-1">NIK</span>
-                        <strong class="text-slate-900 font-medium">{{ $student->nik ? decrypt($student->nik) : '-' }}</strong>
+                        <strong class="text-slate-900 font-medium">{{ $student->nik ?? '-' }}</strong>
                     </div>
                     <div>
                         <span class="text-slate-400 block mb-1">Tempat / Tanggal Lahir</span>

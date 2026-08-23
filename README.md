@@ -39,10 +39,10 @@
 ---
 
 ## 🛠️ Tech Stack
-- **Framework**: Laravel 11.x / PHP 8.2+
+- **Backend Framework**: Laravel 13.x (PHP 8.4+)
 - **Database**: MySQL 8.0+
-- **Frontend**: Tailwind CSS / Vanilla CSS, Alpine.js, Blade Templates
-- **Excel Processor**: PhpSpreadsheet
+- **Frontend / Styling**: Tailwind CSS, Vanilla CSS, Alpine.js, Blade Templates
+- **Excel Processing**: PhpSpreadsheet
 
 ---
 
@@ -94,4 +94,7 @@ npm run dev
 ## 👥 Pengguna Bawaan (Default Credentials)
 Setelah melakukan seeding, Anda dapat masuk menggunakan akun berikut:
 - **Admin**: Username: `admin` / Password: `Password123!`
-- **Siswa / Guru**: Menggunakan NIS/NIP masing-masing, dengan password default **tanggal lahir format DDMMYYYY** (Contoh: `17081945` untuk kelahiran 17 Agustus 1945).
+- **Siswa / Guru**: Menggunakan NIS/NIP masing-masing (setelah diimpor atau ditambahkan oleh Admin), dengan password default **tanggal lahir format DDMMYYYY** (Contoh: `17081945` untuk kelahiran 17 Agustus 1945).
+
+> [!NOTE]
+> Database seeder bawaan (`DatabaseSeeder.php`) sengaja dikosongkan dari mock data (siswa dan guru palsu) untuk persiapan hosting/produksi. Anda dapat langsung mengimpor data asli melalui fitur impor excel di menu Admin setelah login.

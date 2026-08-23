@@ -82,6 +82,10 @@
                             <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                             Guru & Tendik
                         </a>
+                        <a href="{{ route('admin.ptk-types.index') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('admin.ptk-types.*') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                            Jenis PTK
+                        </a>
                         <a href="{{ route('admin.classes.index') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('admin.classes.*') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
                             <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                             Rombongan Belajar
@@ -152,12 +156,42 @@
                     <div class="space-y-1">
                         <a href="{{ route('employee.dashboard') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('employee.dashboard') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
                             <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
-                            Dashboard & Profil
+                            Dashboard
+                        </a>
+                        <a href="{{ route('employee.classes') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('employee.classes*') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                            Daftar Rombel
+                        </a>
+                        <a href="{{ route('employee.profile') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('employee.profile') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            Data Diri
                         </a>
                     </div>
                 </div>
             @endif
         </nav>
+
+        <!-- Sidebar Bottom Box -->
+        <div class="p-4 border-t border-slate-900 bg-slate-950/50">
+            <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-900 space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[10px] font-bold text-white tracking-wide">Sistem Informasi PTK</h4>
+                        <p class="text-[9px] text-slate-500 font-medium">SMKN 1 Cirebon</p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between text-[9px] text-slate-500 font-medium border-t border-slate-900/50 pt-2.5">
+                    <span>&copy; 2026 SobatData Neper</span>
+                    <span class="flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                        Sistem Online
+                    </span>
+                </div>
+            </div>
+        </div>
     </aside>
 
     <!-- Main Content Area -->
@@ -175,36 +209,79 @@
                     $navActiveYear = \App\Models\SchoolYear::where('is_active', true)->first();
                     $navActiveSemester = $navActiveYear ? \App\Models\Semester::where('school_year_id', $navActiveYear->id)->where('is_active', true)->first() : null;
                 @endphp
-                <div class="hidden md:flex items-center gap-2">
-                    <span class="text-xs font-semibold text-slate-700 bg-slate-100 px-3 py-1 rounded-full flex items-center gap-1.5 border border-slate-200">
-                        <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
-                        @if($navActiveYear && $navActiveSemester)
-                            Semester {{ $navActiveSemester->semester }} {{ $navActiveYear->name }}
-                        @else
-                            Periode Tidak Aktif
-                        @endif
-                    </span>
-                    <span class="text-xs text-slate-400 font-medium">{{ Carbon\Carbon::now()->translatedFormat('l, d F Y') }}</span>
+                <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-800">
+                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
+                    @if($navActiveYear && $navActiveSemester)
+                        Semester {{ $navActiveSemester->semester }} {{ $navActiveYear->name }}
+                    @else
+                        Periode Tidak Aktif
+                    @endif
+                    <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="hidden md:flex items-center gap-2 text-xs font-medium text-slate-500">
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
+                    {{ Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
                 </div>
             </div>
 
-            <!-- Profile Info & Logout Header -->
-            <div class="flex items-center gap-3">
-                <div class="flex flex-col text-right hidden sm:flex">
-                    <span class="text-xs font-bold text-slate-900">{{ auth()->user()->name }}</span>
-                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wide self-end bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-full mt-0.5">{{ str_replace('_', ' ', auth()->user()->role) }}</span>
+            <!-- Profile Info & Dropdown Menu -->
+            <div class="relative" x-data="{ open: false }" @click.away="open = false">
+                <!-- Dropdown Trigger -->
+                <button @click="open = !open" class="flex items-center gap-3 focus:outline-none group">
+                    <div class="flex flex-col text-right hidden sm:flex">
+                        <span class="text-xs font-bold text-slate-900 leading-none group-hover:text-blue-600 transition">{{ auth()->user()->name }}</span>
+                        <span class="text-[8px] font-extrabold text-blue-600 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-full mt-1.5 self-end uppercase tracking-wider">{{ auth()->user()->isEmployee() && auth()->user()->employee ? (auth()->user()->employee->ptk_type ?: 'PTK') : str_replace('_', ' ', auth()->user()->role) }}</span>
+                    </div>
+                    
+                    <div class="w-9 h-9 rounded-full bg-blue-600 border border-blue-500 text-white flex items-center justify-center font-bold text-xs select-none shadow-sm transition group-hover:scale-105">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 2)) }}
+                    </div>
+                </button>
+
+                <!-- Dropdown Content -->
+                <div x-show="open" 
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="transform opacity-0 scale-95"
+                     x-transition:enter-end="transform opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-75"
+                     x-transition:leave-start="transform opacity-100 scale-100"
+                     x-transition:leave-end="transform opacity-0 scale-95"
+                     class="absolute right-0 mt-2 w-48 bg-white border border-slate-200 rounded-2xl shadow-lg py-1.5 z-50 overflow-hidden" 
+                     style="display: none;">
+                    
+                    <!-- Role info for small screens -->
+                    <div class="px-4 py-2 border-b border-slate-100 sm:hidden">
+                        <p class="text-xs font-bold text-slate-900 leading-none">{{ auth()->user()->name }}</p>
+                        <p class="text-[9px] text-slate-400 mt-1 uppercase font-semibold">{{ auth()->user()->isEmployee() && auth()->user()->employee ? (auth()->user()->employee->ptk_type ?: 'PTK') : str_replace('_', ' ', auth()->user()->role) }}</p>
+                    </div>
+
+                    <!-- Profile Link -->
+                    @php
+                        $profileRoute = '#';
+                        if (auth()->user()->isAdmin()) {
+                            $profileRoute = route('admin.profile');
+                        } elseif (auth()->user()->isEmployee()) {
+                            $profileRoute = route('employee.profile');
+                        } elseif (auth()->user()->isSiswa()) {
+                            $profileRoute = route('student.dashboard');
+                        }
+                    @endphp
+                    <a href="{{ $profileRoute }}" class="flex items-center gap-2 px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+                        <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        Profil Saya
+                    </a>
+
+                    <div class="border-t border-slate-100 my-1"></div>
+
+                    <!-- Logout Button -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center gap-2 px-4 py-2 text-xs font-bold text-red-600 hover:bg-red-50 transition text-left">
+                            <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                            Keluar
+                        </button>
+                    </form>
                 </div>
-                
-                <div class="w-9 h-9 rounded-full bg-slate-900 border border-slate-800 text-white flex items-center justify-center font-bold text-xs select-none">
-                    {{ substr(auth()->user()->name, 0, 2) }}
-                </div>
-                
-                <form method="POST" action="{{ route('logout') }}" class="inline-block border-l border-slate-200 pl-3">
-                    @csrf
-                    <button type="submit" title="Logout dari Aplikasi" class="text-slate-400 hover:text-red-600 p-1.5 rounded-xl hover:bg-red-50 transition active:scale-[0.98]">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    </button>
-                </form>
             </div>
         </header>
 

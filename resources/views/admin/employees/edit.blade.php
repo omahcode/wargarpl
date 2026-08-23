@@ -78,10 +78,9 @@
                 <div>
                     <label for="ptk_type" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Jenis PTK *</label>
                     <select id="ptk_type" name="ptk_type" required class="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:border-slate-900 focus:ring-1 focus:ring-slate-900 outline-none text-sm font-medium transition bg-slate-50/50 focus:bg-white">
-                        <option value="Guru" {{ old('ptk_type', $employee->ptk_type) === 'Guru' ? 'selected' : '' }}>Guru</option>
-                        <option value="Tenaga Administrasi" {{ old('ptk_type', $employee->ptk_type) === 'Tenaga Administrasi' ? 'selected' : '' }}>Tenaga Administrasi</option>
-                        <option value="Teknisi" {{ old('ptk_type', $employee->ptk_type) === 'Teknisi' ? 'selected' : '' }}>Teknisi</option>
-                        <option value="Laboran" {{ old('ptk_type', $employee->ptk_type) === 'Laboran' ? 'selected' : '' }}>Laboran</option>
+                        @foreach($ptkTypes as $type)
+                            <option value="{{ $type->name }}" {{ old('ptk_type', $employee->ptk_type) === $type->name ? 'selected' : '' }}>{{ $type->name }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div>

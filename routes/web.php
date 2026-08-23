@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\StudentController as AdminStudentController;
 use App\Http\Controllers\Admin\EmployeeController as AdminEmployeeController;
 use App\Http\Controllers\Admin\SchoolClassController as AdminSchoolClassController;
 use App\Http\Controllers\Admin\MajorController as AdminMajorController;
+use App\Http\Controllers\Admin\PtkTypeController as AdminPtkTypeController;
 use App\Http\Controllers\Admin\MonitoringController as AdminMonitoringController;
 use App\Http\Controllers\Admin\AuditController as AdminAuditController;
 use App\Http\Controllers\Admin\ApiClientController as AdminApiClientController;
@@ -39,12 +40,16 @@ Route::middleware(['auth', 'role:siswa'])->prefix('student')->name('student.')->
 // Employee Protected Routes
 Route::middleware(['auth', 'role:employee'])->prefix('employee')->name('employee.')->group(function () {
     Route::get('/dashboard', [EmployeeDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/classes', [EmployeeDashboardController::class, 'classes'])->name('classes');
+    Route::get('/profile', [EmployeeDashboardController::class, 'profile'])->name('profile');
     Route::post('/profile', [EmployeeDashboardController::class, 'update'])->name('update');
+    Route::get('/search-students', [EmployeeDashboardController::class, 'searchApi'])->name('search-students');
 });
 
 // Admin Protected Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [AdminDashboardController::class, 'profile'])->name('profile');
     
     // Students CRUD
     Route::get('/students', [AdminStudentController::class, 'index'])->name('students.index');
@@ -92,6 +97,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/majors/{id}', [AdminMajorController::class, 'update'])->name('majors.update');
     Route::delete('/majors/{id}', [AdminMajorController::class, 'destroy'])->name('majors.destroy');
     Route::post('/majors/delete-all', [AdminMajorController::class, 'deleteAll'])->name('majors.delete-all');
+
+    // PTK Types CRUD
+    Route::get('/ptk-types', [AdminPtkTypeController::class, 'index'])->name('ptk-types.index');
+    Route::post('/ptk-types', [AdminPtkTypeController::class, 'store'])->name('ptk-types.store');
+    Route::put('/ptk-types/{id}', [AdminPtkTypeController::class, 'update'])->name('ptk-types.update');
+    Route::delete('/ptk-types/{id}', [AdminPtkTypeController::class, 'destroy'])->name('ptk-types.destroy');
     
     // API Integrations
     Route::get('/clients', [AdminApiClientController::class, 'index'])->name('clients.index');

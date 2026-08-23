@@ -113,4 +113,10 @@ class DashboardController extends Controller
             'campaign', 'verificationStats', 'recentAuditLogs'
         ));
     }
+
+    public function profile()
+    {
+        $user = \Illuminate\Support\Facades\Auth::user();
+        return view('admin.profile', compact('user'));
+    }
 }

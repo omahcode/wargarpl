@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\Employee;
 use App\Models\User;
+use App\Models\PtkType;
 
 class EmployeeController extends Controller
 {
@@ -34,12 +35,14 @@ class EmployeeController extends Controller
 
         $employees = $query->paginate(15)->withQueryString();
 
-        return view('admin.employees.index', compact('employees', 'search', 'typeFilter'));
+        $ptkTypes = PtkType::all();
+        return view('admin.employees.index', compact('employees', 'search', 'typeFilter', 'ptkTypes'));
     }
 
     public function create()
     {
-        return view('admin.employees.create');
+        $ptkTypes = PtkType::all();
+        return view('admin.employees.create', compact('ptkTypes'));
     }
 
     public function store(Request $request)
@@ -136,7 +139,8 @@ class EmployeeController extends Controller
     public function edit($uuid)
     {
         $employee = Employee::where('uuid', $uuid)->firstOrFail();
-        return view('admin.employees.edit', compact('employee'));
+        $ptkTypes = PtkType::all();
+        return view('admin.employees.edit', compact('employee', 'ptkTypes'));
     }
 
     public function update(Request $request, $uuid)
