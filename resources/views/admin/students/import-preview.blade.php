@@ -99,7 +99,8 @@
                     },
                     processChunk(index) {
                         const chunkSize = 25;
-                        fetch('{{ route('admin.students.import-chunk') }}', {
+                        const chunkUrl = '{{ route('admin.students.import-chunk', [], false) }}';
+                        fetch(chunkUrl, {
                             method: 'POST',
                             credentials: 'same-origin',
                             headers: {
@@ -130,7 +131,7 @@
                                 this.progress = Math.round((this.processed / this.total) * 100);
                                 if (data.is_finished) {
                                     setTimeout(() => {
-                                        window.location.href = '{{ $importType === 'siswa' ? route('admin.students.index') : route('admin.employees.index') }}?success=Berhasil+mengimpor+' + this.total + '+data';
+                                        window.location.href = '{{ $importType === 'siswa' ? route('admin.students.index', [], false) : route('admin.employees.index', [], false) }}?success=Berhasil+mengimpor+' + this.total + '+data';
                                     }, 800);
                                 } else {
                                     this.processChunk(index + 1);
