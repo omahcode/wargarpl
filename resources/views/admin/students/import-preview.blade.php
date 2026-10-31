@@ -14,18 +14,26 @@
     </div>
 
     <!-- Stats summary grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
             <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Baris File</span>
             <div class="text-2xl font-extrabold text-slate-900 mt-1">{{ $total }}</div>
+            <p class="text-[11px] text-slate-400 mt-1">Total data terbaca dari file</p>
+        </div>
+        <div class="bg-white border border-emerald-100 rounded-2xl p-5 shadow-sm bg-gradient-to-br from-white to-emerald-50/30">
+            <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Valid & Siap Impor</span>
+            <div class="text-2xl font-extrabold text-emerald-600 mt-1">{{ $validCount }}</div>
+            <p class="text-[11px] text-emerald-600/80 mt-1 font-medium">Khusus Siswa RPL / PPLG</p>
+        </div>
+        <div class="bg-white border border-amber-100 rounded-2xl p-5 shadow-sm bg-gradient-to-br from-white to-amber-50/30">
+            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Dilewati Otomatis</span>
+            <div class="text-2xl font-extrabold text-amber-600 mt-1">{{ $skippedCount ?? 0 }}</div>
+            <p class="text-[11px] text-amber-600/80 mt-1 font-medium">Jurusan luar RPL/PPLG dilewati</p>
         </div>
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-            <span class="text-xs font-bold text-green-500 uppercase tracking-wider">Valid & Siap Impor</span>
-            <div class="text-2xl font-extrabold text-green-600 mt-1">{{ $validCount }}</div>
-        </div>
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
-            <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Gagal Validasi (Error)</span>
+            <span class="text-xs font-bold text-red-500 uppercase tracking-wider">Gagal Validasi</span>
             <div class="text-2xl font-extrabold text-red-600 mt-1">{{ $errorCount }}</div>
+            <p class="text-[11px] text-slate-400 mt-1">Format/kolom bermasalah</p>
         </div>
     </div>
 
