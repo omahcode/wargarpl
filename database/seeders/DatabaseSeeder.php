@@ -57,13 +57,10 @@ class DatabaseSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
 
-        // 3. Seed Majors
+        // 3. Seed Majors (Khusus Siswa Siswi RPL & PPLG)
         $majors = [
             ['code' => 'PPLG', 'name' => 'Pengembangan Perangkat Lunak dan Gim'],
-            ['code' => 'DPIB', 'name' => 'Desain Pemodelan dan Informasi Bangunan'],
-            ['code' => 'TJKT', 'name' => 'Teknik Jaringan Komputer dan Telekomunikasi'],
-            ['code' => 'TE', 'name' => 'Teknik Elektronika'],
-            ['code' => 'TO', 'name' => 'Teknik Otomotif'],
+            ['code' => 'RPL',  'name' => 'Rekayasa Perangkat Lunak'],
         ];
         $majorIds = [];
         foreach ($majors as $m) {
@@ -73,38 +70,56 @@ class DatabaseSeeder extends Seeder
             ]));
         }
 
-        // 4. Empty Employees (Teachers & Staff) - Removed mock data for hosting preparation
+        // 4. Empty Employees (Teachers & Staff)
         $teacherIds = [];
 
-        // 5. Empty Classes - Removed mock data for hosting preparation
-        $classIds = [];
+        // 5. Seed Rombel Khusus RPL & PPLG
+        $rplClasses = [
+            ['name' => 'X PPLG 1',  'grade_level' => 10, 'major_code' => 'PPLG'],
+            ['name' => 'X PPLG 2',  'grade_level' => 10, 'major_code' => 'PPLG'],
+            ['name' => 'XI PPLG 1', 'grade_level' => 11, 'major_code' => 'PPLG'],
+            ['name' => 'XI PPLG 2', 'grade_level' => 11, 'major_code' => 'PPLG'],
+            ['name' => 'XII RPL 1', 'grade_level' => 12, 'major_code' => 'RPL'],
+            ['name' => 'XII RPL 2', 'grade_level' => 12, 'major_code' => 'RPL'],
+        ];
+        foreach ($rplClasses as $sc) {
+            DB::table('classes')->insert([
+                'name' => $sc['name'],
+                'grade_level' => $sc['grade_level'],
+                'school_year_id' => $syId,
+                'major_id' => $majorIds[$sc['major_code']],
+                'status' => true,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
 
-        // 6. Empty Students - Removed mock data for hosting preparation
+        // 6. Empty Students - Siap diimpor melalui file excel Dapodik RPL/PPLG
         $studentList = [];
 
         // 7. Seed Admin Accounts
         $admins = [
             [
-                'name' => 'Super Admin Bank Data',
-                'email' => 'admin@smkn1-cirebon.sch.id',
+                'name' => 'Super Admin WargaRPL',
+                'email' => 'admin@wargarpl.id',
                 'username' => 'admin',
                 'role' => 'super_admin',
             ],
             [
-                'name' => 'Admin Tata Usaha',
-                'email' => 'tu@smkn1-cirebon.sch.id',
-                'username' => 'admintu',
+                'name' => 'Admin Jurusan RPL',
+                'email' => 'rpl@wargarpl.id',
+                'username' => 'adminrpl',
                 'role' => 'admin_tu',
             ],
             [
-                'name' => 'Admin Kurikulum',
-                'email' => 'kurikulum@smkn1-cirebon.sch.id',
+                'name' => 'Admin Kurikulum RPL',
+                'email' => 'kurikulum@wargarpl.id',
                 'username' => 'admin_kurikulum',
                 'role' => 'admin_kurikulum',
             ],
             [
-                'name' => 'Admin Kesiswaan',
-                'email' => 'kesiswaan@smkn1-cirebon.sch.id',
+                'name' => 'Admin Kesiswaan RPL',
+                'email' => 'kesiswaan@wargarpl.id',
                 'username' => 'admin_kesiswaan',
                 'role' => 'admin_kesiswaan',
             ],
@@ -129,24 +144,25 @@ class DatabaseSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]);
 
-        // 10. Seed API Clients
-        $clientSecret = 'c7e9bb765b2a3d0fce7839faec78a101'; // dummy key MD5-like
+        // 10. Seed API Token
+        $defaultToken = 'wgr_live_' . Str::random(40);
         DB::table('api_clients')->insert([
-            'name' => 'E-Rapor SMK Negeri 1 Cirebon',
-            'client_id' => 'ERAPOR_NEPer',
-            'secret_token' => Hash::make($clientSecret),
-            'scopes' => json_encode(['students.read', 'classes.read', 'teachers.read']),
+            'name' => 'WargaRPL API Integration',
+            'token' => $defaultToken,
+            'client_id' => 'wgr_' . Str::lower(Str::random(8)),
+            'secret_token' => Hash::make($defaultToken),
+            'scopes' => json_encode(['students.read', 'students.private', 'classes.read', 'teachers.read']),
             'rate_limit' => 300,
             'status' => 'active',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
         
-        // Log the API client key to the console during seed
+        // Log the API Token to the console during seed
         $this->command->info("==============================================");
-        $this->command->info("API Client created:");
-        $this->command->info("Client ID: ERAPOR_NEPer");
-        $this->command->info("Secret Token: " . $clientSecret);
+        $this->command->info("WargaRPL API Token generated:");
+        $this->command->info("Bearer Token: " . $defaultToken);
+        $this->command->info("Use Header: Authorization: Bearer " . $defaultToken);
         $this->command->info("==============================================");
     }
 }

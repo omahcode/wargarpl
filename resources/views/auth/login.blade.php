@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SobatData Neper</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('logo-smk.svg') }}">
+    <title>Login - WargaRPL</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('wargarpl-logo.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -21,15 +21,18 @@
 
     <!-- Main Content Container -->
     <div class="w-full max-w-[390px] mx-auto my-auto space-y-6">
-        <!-- Logo and Title (No card wrapper around logo) -->
+        <!-- Logo and Title -->
         <div class="text-center">
             <div class="inline-flex items-center justify-center mb-4 transition-transform duration-300 hover:scale-105">
-                <img src="{{ asset('logo-smk.svg') }}" class="w-16 h-16 object-contain" alt="Logo SMK" />
+                <img src="{{ asset('wargarpl-logo.svg') }}" class="w-16 h-16 object-contain rounded-2xl shadow-md" alt="Logo WargaRPL" />
             </div>
-            <h2 class="text-xl font-bold tracking-tight text-slate-950 font-display">SobatData Neper</h2>
-            <p class="text-xs text-slate-400 font-medium mt-1">
-                Portal Data Terpadu Pendidik & Peserta Didik <br>
-                <span class="text-slate-500 font-semibold">SMK Negeri 1 Cirebon</span>
+            <h2 class="text-2xl font-bold tracking-tight text-slate-950 font-display flex items-center justify-center gap-2">
+                <span>WargaRPL</span>
+                <span class="text-[10px] px-2 py-0.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-full font-mono font-semibold">BANK DATA</span>
+            </h2>
+            <p class="text-xs text-slate-500 font-medium mt-1.5 leading-relaxed">
+                Bank Data Siswa & Siswi <br>
+                <span class="text-indigo-600 font-semibold">Rekayasa Perangkat Lunak & PPLG</span>
             </p>
         </div>
 
@@ -137,8 +140,8 @@
 
     <!-- Footer Note -->
     <div class="text-center w-full">
-        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Single Identity & Master Data Portal</p>
-        <p class="text-[8px] text-slate-400 mt-0.5">&copy; {{ date('Y') }} SMKN 1 Cirebon. All rights reserved.</p>
+        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Single Identity & Master Data Siswa RPL/PPLG</p>
+        <p class="text-[8px] text-slate-400 mt-0.5">&copy; {{ date('Y') }} WargaRPL &bull; SMKN 1 Cirebon. All rights reserved.</p>
     </div>
 </body>
 </html>

@@ -97,6 +97,14 @@ class ImportExportController extends Controller
                         $errors[] = 'Jenis Kelamin harus L atau P.';
                     }
 
+                    $studentClass = trim($sheet->getCell('B' . $row)->getValue() ?? '');
+                    $upperClass = strtoupper($studentClass);
+                    $isRplClass = empty($studentClass) || str_contains($upperClass, 'RPL') || str_contains($upperClass, 'PPLG');
+
+                    if (!$isRplClass) {
+                        $errors[] = "Rombel '{$studentClass}' bukan jurusan RPL/PPLG. Bank data WargaRPL dikhususkan hanya untuk siswa/siswi RPL dan PPLG.";
+                    }
+
                     if (count($errors) > 0) {
                         $errorRows[] = [
                             'row' => $row,
@@ -679,20 +687,7 @@ class ImportExportController extends Controller
 
         $majorMap = [
             'PPLG'  => ['code' => 'PPLG',  'name' => 'Pengembangan Perangkat Lunak dan Gim'],
-            'RPL'   => ['code' => 'PPLG',  'name' => 'Pengembangan Perangkat Lunak dan Gim'],
-            'DPIB'  => ['code' => 'DPIB',  'name' => 'Desain Permodelan dan Informasi Bangunan'],
-            'TGB'   => ['code' => 'DPIB',  'name' => 'Desain Permodelan dan Informasi Bangunan'],
-            'TJKT'  => ['code' => 'TJKT',  'name' => 'Teknik Jaringan Komputer dan Telekomunikasi'],
-            'TKJ'   => ['code' => 'TJKT',  'name' => 'Teknik Jaringan Komputer dan Telekomunikasi'],
-            'TE'    => ['code' => 'TE',    'name' => 'Teknik Elektronika'],
-            'TITL'  => ['code' => 'TITL',  'name' => 'Teknik Instalasi Tenaga Listrik'],
-            'TO'    => ['code' => 'TO',    'name' => 'Teknik Otomotif'],
-            'TKR'   => ['code' => 'TKR',   'name' => 'Teknik Kendaraan Ringan Otomotif'],
-            'TSM'   => ['code' => 'TSM',   'name' => 'Teknik dan Bisnis Sepeda Motor'],
-            'TP'    => ['code' => 'TP',    'name' => 'Teknik Pemesinan'],
-            'KA'    => ['code' => 'KA',    'name' => 'Kuliner / Agribisnis'],
-            'TB'    => ['code' => 'TB',    'name' => 'Tata Busana'],
-            'TKP'   => ['code' => 'TKP',   'name' => 'Teknik Konstruksi dan Perumahan'],
+            'RPL'   => ['code' => 'RPL',   'name' => 'Rekayasa Perangkat Lunak'],
         ];
 
         foreach ($majorMap as $keyword => $data) {
@@ -703,12 +698,10 @@ class ImportExportController extends Controller
             }
         }
 
-        // If no keyword matched, derive major code from class name as fallback
+        // If no keyword matched, default to PPLG (WargaRPL)
         if (!$majorCode) {
-            // e.g. "X DPIB 1" -> extract second word
-            $parts = preg_split('/\s+/', $upperName);
-            $majorCode = $parts[1] ?? strtoupper(substr($className, 0, 6));
-            $majorName = $majorCode;
+            $majorCode = 'PPLG';
+            $majorName = 'Pengembangan Perangkat Lunak dan Gim';
         }
 
         // Find or create the major dynamically (no hardcoded IDs)

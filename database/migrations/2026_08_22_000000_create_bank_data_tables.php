@@ -232,12 +232,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 13. API Clients (Applications)
+        // 13. API Clients (Applications & Tokens)
         Schema::create('api_clients', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // e.g. E-Rapor
-            $table->string('client_id')->unique();
-            $table->string('secret_token');
+            $table->string('name'); // e.g. Web Portofolio RPL
+            $table->string('token', 120)->unique()->nullable(); // API Token (Bearer)
+            $table->string('client_id')->nullable()->unique();
+            $table->string('secret_token')->nullable();
             $table->text('scopes')->nullable(); // JSON array
             $table->integer('rate_limit')->default(60);
             $table->string('status')->default('active'); // active, inactive

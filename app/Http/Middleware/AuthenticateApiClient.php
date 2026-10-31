@@ -17,31 +17,55 @@ class AuthenticateApiClient
      */
     public function handle(Request $request, Closure $next, string $scope = '*'): Response
     {
-        $clientId = $request->header('X-Client-ID');
-        $clientSecret = $request->header('X-Client-Secret');
+        $token = $request->bearerToken() 
+            ?? $request->header('X-API-Token') 
+            ?? $request->header('X-Token')
+            ?? $request->query('token');
 
-        if (!$clientId || !$clientSecret) {
+        $client = null;
+
+        if ($token) {
+            // 1. Direct match on token column or plain secret_token
+            $client = ApiClient::where('token', $token)
+                ->orWhere('secret_token', $token)
+                ->first();
+
+            // 2. Fallback check for hashed secret_token
+            if (!$client) {
+                $activeClients = ApiClient::where('status', 'active')
+                    ->whereNotNull('secret_token')
+                    ->get();
+                foreach ($activeClients as $candidate) {
+                    if (Hash::check($token, $candidate->secret_token)) {
+                        $client = $candidate;
+                        break;
+                    }
+                }
+            }
+        } else {
+            // Fallback for legacy clients using X-Client-ID and X-Client-Secret
+            $clientId = $request->header('X-Client-ID');
+            $clientSecret = $request->header('X-Client-Secret');
+
+            if ($clientId && $clientSecret) {
+                $candidate = ApiClient::where('client_id', $clientId)->first();
+                if ($candidate && Hash::check($clientSecret, $candidate->secret_token)) {
+                    $client = $candidate;
+                }
+            }
+        }
+
+        if (!$client) {
             return response()->json([
                 'success' => false,
-                'message' => 'Kredensial API tidak lengkap (Header X-Client-ID dan X-Client-Secret wajib diisi).'
+                'message' => 'Token API tidak valid atau tidak disertakan. Gunakan header Authorization: Bearer <token> atau X-API-Token: <token>.'
             ], 401);
         }
 
-        // Fetch client
-        $client = ApiClient::where('client_id', $clientId)->first();
-
-        if (!$client || $client->status !== 'active') {
+        if ($client->status !== 'active') {
             return response()->json([
                 'success' => false,
-                'message' => 'Kredensial API tidak valid atau aplikasi dinonaktifkan.'
-            ], 401);
-        }
-
-        // Verify Secret Token
-        if (!Hash::check($clientSecret, $client->secret_token)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Kredensial API tidak valid.'
+                'message' => 'Token API ini telah dinonaktifkan (Revoked).'
             ], 401);
         }
 
@@ -56,7 +80,8 @@ class AuthenticateApiClient
 
         // Enforce Rate Limiting
         $rateLimit = $client->rate_limit ?? 60;
-        $cacheKey = "api_rate_limit:{$clientId}:" . date('Y-m-d-H-i');
+        $clientIdKey = $client->token ? substr(md5($client->token), 0, 16) : ($client->client_id ?? $client->id);
+        $cacheKey = "api_rate_limit:{$clientIdKey}:" . date('Y-m-d-H-i');
         $requestsCount = Cache::remember($cacheKey, 60, function () {
             return 0;
         });

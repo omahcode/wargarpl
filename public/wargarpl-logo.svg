@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="wgr-bg-grad" x1="10" y1="10" x2="110" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="50%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+    <linearGradient id="wgr-inner-grad" x1="20" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+    <linearGradient id="wgr-accent-grad" x1="30" y1="30" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#818CF8" />
+    </linearGradient>
+    <linearGradient id="wgr-slash-grad" x1="45" y1="25" x2="75" y2="95" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#22D3EE" />
+      <stop offset="100%" stop-color="#A855F7" />
+    </linearGradient>
+    <filter id="wgr-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Squircle with Vibrant Gradient -->
+  <rect x="8" y="8" width="104" height="104" rx="28" fill="url(#wgr-bg-grad)" />
+
+  <!-- Inner Dark Surface -->
+  <rect x="11" y="11" width="98" height="98" rx="25" fill="url(#wgr-inner-grad)" />
+
+  <!-- Ambient Light Reflection -->
+  <path d="M12 36C12 22.7452 22.7452 12 36 12H84C97.2548 12 108 22.7452 108 36V44C108 44 80 50 60 50C40 50 12 44 12 44V36Z" fill="white" fill-opacity="0.04" />
+
+  <!-- Tech Dots / Connection Nodes (Warga Community) -->
+  <circle cx="60" cy="22" r="3" fill="#38BDF8" fill-opacity="0.8" />
+  <circle cx="60" cy="98" r="3" fill="#818CF8" fill-opacity="0.8" />
+
+  <!-- Code Brackets & Slash: < / > (Rekayasa Perangkat Lunak) -->
+  <!-- Left Angle Bracket < -->
+  <path d="M43 42L29 60L43 78" stroke="url(#wgr-accent-grad)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+
+  <!-- Center Slash / -->
+  <path d="M68 34L52 86" stroke="url(#wgr-slash-grad)" stroke-width="6.5" stroke-linecap="round" filter="url(#wgr-glow)" />
+
+  <!-- Right Angle Bracket > -->
+  <path d="M77 42L91 60L77 78" stroke="url(#wgr-accent-grad)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" />
+</svg>
+

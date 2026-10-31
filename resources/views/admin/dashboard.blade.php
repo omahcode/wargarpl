@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard - SobatData Neper')
+@section('title', 'Dashboard - WargaRPL')
 
 @section('content')
 <div class="space-y-6">
@@ -8,12 +8,15 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-            <h2 class="text-2xl font-bold text-slate-900 font-display">Ringkasan Data</h2>
+            <h2 class="text-2xl font-bold text-slate-900 font-display flex items-center gap-2">
+                <span>Ringkasan Data WargaRPL</span>
+                <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-mono font-bold border border-indigo-200">Khusus RPL/PPLG</span>
+            </h2>
             <p class="text-sm text-slate-400 font-medium mt-0.5">
                 @if($activeYear)
-                    Tahun Ajaran {{ $activeYear->name }} &bull; Data terintegrasi SobatData Neper
+                    Tahun Ajaran {{ $activeYear->name }} &bull; Bank Data Siswa RPL & PPLG - WargaRPL
                 @else
-                    Pusat Data Terintegrasi SMK Negeri 1 Cirebon
+                    Bank Data Siswa RPL & PPLG - SMKN 1 Cirebon
                 @endif
             </p>
         </div>
@@ -26,11 +29,11 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Siswa -->
         <a href="{{ route('admin.students.index') }}" class="group bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:border-slate-300 hover:shadow-md transition">
-            <div class="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition">
+            <div class="w-11 h-11 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             </div>
             <div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Siswa</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Warga RPL (Siswa)</span>
                 <span class="text-2xl font-extrabold text-slate-900">{{ number_format($totalStudents) }}</span>
             </div>
         </a>
@@ -41,7 +44,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
             </div>
             <div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Guru & Tendik</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Guru & Tendik RPL</span>
                 <span class="text-2xl font-extrabold text-slate-900">{{ number_format($totalEmployees) }}</span>
             </div>
         </a>
@@ -52,18 +55,18 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
             </div>
             <div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Rombel</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Rombel RPL/PPLG</span>
                 <span class="text-2xl font-extrabold text-slate-900">{{ number_format($totalClasses) }}</span>
             </div>
         </a>
 
         <!-- Jurusan -->
         <a href="{{ route('admin.majors.index') }}" class="group bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex items-center gap-4 hover:border-slate-300 hover:shadow-md transition">
-            <div class="w-11 h-11 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+            <div class="w-11 h-11 rounded-xl bg-cyan-600 text-white flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
             </div>
             <div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Kompetensi Keahlian</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Konsentrasi RPL</span>
                 <span class="text-2xl font-extrabold text-slate-900">{{ number_format($totalMajors) }}</span>
             </div>
         </a>

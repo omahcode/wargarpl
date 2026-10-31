@@ -104,10 +104,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/ptk-types/{id}', [AdminPtkTypeController::class, 'update'])->name('ptk-types.update');
     Route::delete('/ptk-types/{id}', [AdminPtkTypeController::class, 'destroy'])->name('ptk-types.destroy');
     
-    // API Integrations
+    // API Integrations (Token Management)
     Route::get('/clients', [AdminApiClientController::class, 'index'])->name('clients.index');
     Route::post('/clients', [AdminApiClientController::class, 'store'])->name('clients.store');
     Route::post('/clients/{id}/toggle', [AdminApiClientController::class, 'toggleStatus'])->name('clients.toggle');
+    Route::post('/clients/{id}/regenerate', [AdminApiClientController::class, 'regenerateToken'])->name('clients.regenerate');
+    Route::delete('/clients/{id}', [AdminApiClientController::class, 'destroy'])->name('clients.destroy');
     Route::get('/api-docs', fn() => view('admin.api-docs'))->name('api-docs');
     
     // Monitoring & Auditing

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dokumentasi API - SobatData Neper')
+@section('title', 'Dokumentasi API - WargaRPL')
 
 @section('content')
 <div class="space-y-6" x-data="{ activeSection: 'start', copiedKey: null }">
@@ -8,12 +8,16 @@
     <!-- Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-            <h2 class="text-2xl font-bold text-slate-900">Dokumentasi REST API</h2>
-            <p class="text-sm text-slate-400 font-medium mt-0.5">SobatData Neper &bull; Pusat Data Terintegrasi SMK Negeri 1 Cirebon</p>
+            <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-bold text-slate-900">Dokumentasi REST API</h2>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">WargaRPL API</span>
+            </div>
+            <p class="text-sm text-slate-400 font-medium mt-0.5">WargaRPL &bull; Bank Data Terpadu Siswa RPL & PPLG SMK Negeri 1 Cirebon</p>
         </div>
         <div class="flex gap-2">
-            <a href="{{ route('admin.clients.index') }}" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-sm font-semibold transition">
-                Kelola API Client →
+            <a href="{{ route('admin.clients.index') }}" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-semibold transition flex items-center gap-1.5 shadow-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                Kelola API Token →
             </a>
         </div>
     </div>
@@ -27,16 +31,16 @@
             <nav class="space-y-0.5 text-sm font-semibold">
                 @foreach([
                     ['id'=>'start',      'label'=>'🚀 Cara Mulai'],
-                    ['id'=>'auth',       'label'=>'🔐 Autentikasi'],
-                    ['id'=>'students',   'label'=>'👩‍🎓 Siswa'],
-                    ['id'=>'employees',  'label'=>'👨‍🏫 Guru & Tendik'],
-                    ['id'=>'classes',    'label'=>'🏫 Kelas & Jurusan'],
+                    ['id'=>'auth',       'label'=>'🔐 Autentikasi Token'],
+                    ['id'=>'students',   'label'=>'👩‍🎓 Siswa RPL/PPLG'],
+                    ['id'=>'employees',  'label'=>'👨‍🏫 Guru Produktif'],
+                    ['id'=>'classes',    'label'=>'🏫 Rombel & Kelas'],
                     ['id'=>'stats',      'label'=>'📊 Statistik'],
                     ['id'=>'errors',     'label'=>'⚠️ Error Codes'],
                     ['id'=>'examples',   'label'=>'💻 Contoh Kode'],
                 ] as $nav)
                 <button @click="activeSection = '{{ $nav['id'] }}'"
-                    :class="activeSection === '{{ $nav['id'] }}' ? 'bg-slate-900 text-white' : 'text-slate-600 hover:bg-slate-50'"
+                    :class="activeSection === '{{ $nav['id'] }}' ? 'bg-indigo-600 text-white font-bold' : 'text-slate-600 hover:bg-slate-50'"
                     class="w-full text-left px-3 py-2 rounded-lg transition text-xs">
                     {{ $nav['label'] }}
                 </button>
@@ -51,19 +55,19 @@
             <div x-show="activeSection === 'start'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900">🚀 Cara Menggunakan API SobatData Neper</h3>
-                        <p class="text-sm text-slate-500 mt-1">Ikuti langkah-langkah berikut untuk mengintegrasikan data dari SobatData Neper ke aplikasi Anda.</p>
+                        <h3 class="text-lg font-bold text-slate-900">🚀 Cara Menggunakan API WargaRPL</h3>
+                        <p class="text-sm text-slate-500 mt-1">Gunakan API WargaRPL untuk mengakses data siswa RPL/PPLG secara aman menggunakan Bearer Token.</p>
                     </div>
 
                     <div class="space-y-4">
                         <!-- Step 1 -->
-                        <div class="flex gap-4 p-4 bg-blue-50 border border-blue-100 rounded-xl">
-                            <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-black text-sm shrink-0">1</div>
+                        <div class="flex gap-4 p-4 bg-indigo-50 border border-indigo-100 rounded-xl">
+                            <div class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center font-black text-sm shrink-0">1</div>
                             <div>
-                                <h4 class="text-sm font-bold text-slate-900">Buat API Client</h4>
-                                <p class="text-xs text-slate-600 mt-0.5">Masuk ke menu <strong>API Management → Kelola API Client</strong>, klik "Tambah Aplikasi", isi nama aplikasi dan pilih <em>scope</em> (hak akses) yang diperlukan. Anda akan mendapat <code class="bg-white px-1 py-0.5 rounded border border-slate-200 text-blue-700 font-mono">Client ID</code> dan <code class="bg-white px-1 py-0.5 rounded border border-slate-200 text-blue-700 font-mono">Client Secret</code>.</p>
+                                <h4 class="text-sm font-bold text-slate-900">Generate API Token</h4>
+                                <p class="text-xs text-slate-600 mt-0.5">Buka menu <strong>Integrasi API → API Token</strong>, klik tombol <strong>"Generate API Token Baru"</strong>, beri nama aplikasi Anda dan pilih hak akses (scope). Sistem akan men-generate token dengan format <code class="bg-white px-1.5 py-0.5 rounded border border-slate-200 text-indigo-700 font-mono font-bold">wgr_live_...</code>.</p>
                                 <div class="mt-2">
-                                    <a href="{{ route('admin.clients.index') }}" class="text-xs font-bold text-blue-600 hover:underline">→ Ke Halaman API Client</a>
+                                    <a href="{{ route('admin.clients.index') }}" class="text-xs font-bold text-indigo-600 hover:underline">→ Ke Halaman Manajemen Token</a>
                                 </div>
                             </div>
                         </div>
@@ -72,11 +76,11 @@
                         <div class="flex gap-4 p-4 bg-violet-50 border border-violet-100 rounded-xl">
                             <div class="w-8 h-8 bg-violet-600 text-white rounded-full flex items-center justify-center font-black text-sm shrink-0">2</div>
                             <div>
-                                <h4 class="text-sm font-bold text-slate-900">Kirim Header Autentikasi</h4>
-                                <p class="text-xs text-slate-600 mt-0.5">Setiap request API harus menyertakan dua header berikut:</p>
+                                <h4 class="text-sm font-bold text-slate-900">Kirim Header Authorization</h4>
+                                <p class="text-xs text-slate-600 mt-0.5">Sertakan token Anda pada setiap HTTP request dengan format Bearer standard:</p>
                                 <div class="mt-2 bg-slate-900 rounded-lg p-3 font-mono text-xs text-emerald-300 space-y-1">
-                                    <div><span class="text-slate-400">X-Client-ID:</span> <span class="text-amber-300">client_xxxxxxxxxxxxxxxx</span></div>
-                                    <div><span class="text-slate-400">X-Client-Secret:</span> <span class="text-amber-300">secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div>
+                                    <div><span class="text-slate-400">Authorization:</span> <span class="text-cyan-300">Bearer wgr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div>
+                                    <div class="text-[11px] text-slate-500 pt-1">Atau alternatif: <span class="text-slate-400">X-API-Token:</span> <span class="text-cyan-300">wgr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></div>
                                 </div>
                             </div>
                         </div>
@@ -86,11 +90,11 @@
                             <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center font-black text-sm shrink-0">3</div>
                             <div>
                                 <h4 class="text-sm font-bold text-slate-900">Panggil Endpoint API</h4>
-                                <p class="text-xs text-slate-600 mt-0.5">Base URL API Anda (setelah hosting):</p>
-                                <div class="mt-2 bg-slate-900 rounded-lg p-3 font-mono text-xs text-blue-300">
-                                    https://domain-anda.com/api/v1/
+                                <p class="text-xs text-slate-600 mt-0.5">Endpoint API WargaRPL:</p>
+                                <div class="mt-2 bg-slate-900 rounded-lg p-3 font-mono text-xs text-cyan-300">
+                                    {{ url('/api/v1/') }}/
                                 </div>
-                                <p class="text-xs text-slate-500 mt-1.5">Semua response bertipe JSON dengan format standar.</p>
+                                <p class="text-xs text-slate-500 mt-1.5">Semua respons berformat standar JSON.</p>
                             </div>
                         </div>
                     </div>
@@ -103,10 +107,10 @@
                         </div>
                         <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-center">
                             <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Versi API</p>
-                            <p class="text-sm font-bold text-slate-900 mt-1">v1</p>
+                            <p class="text-sm font-bold text-slate-900 mt-1">v1 (WargaRPL)</p>
                         </div>
                         <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 text-center">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rate Limit</p>
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rate Limit Default</p>
                             <p class="text-sm font-bold text-slate-900 mt-1">60 req/menit</p>
                         </div>
                     </div>
@@ -116,29 +120,29 @@
             <!-- ===== AUTENTIKASI ===== -->
             <div x-show="activeSection === 'auth'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-5">
-                    <h3 class="text-lg font-bold text-slate-900">🔐 Autentikasi</h3>
+                    <h3 class="text-lg font-bold text-slate-900">🔐 Autentikasi Token WargaRPL</h3>
 
-                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-                        <strong>Penting:</strong> API ini menggunakan <strong>API Key</strong> berbasis header, bukan OAuth/Bearer token. Simpan kredensial Anda dengan aman dan jangan expose ke frontend publik.
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-sm text-indigo-900 leading-relaxed">
+                        <strong>Autentikasi Token Tunggal (Bearer Token):</strong> Anda hanya perlu men-generate satu token dari halaman admin WargaRPL dan memasukkannya ke header HTTP. Tidak perlu konfigurasi rumit client secret ganda.
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-bold text-slate-800 mb-2">Header yang Diperlukan</h4>
+                        <h4 class="text-sm font-bold text-slate-800 mb-2">Header yang Didukung</h4>
                         <div class="overflow-x-auto rounded-xl border border-slate-200">
                             <table class="w-full text-sm text-left">
                                 <thead class="bg-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                    <tr><th class="px-4 py-2.5">Header</th><th class="px-4 py-2.5">Deskripsi</th><th class="px-4 py-2.5">Wajib</th></tr>
+                                    <tr><th class="px-4 py-2.5">Header</th><th class="px-4 py-2.5">Contoh Nilai</th><th class="px-4 py-2.5">Status</th></tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100 font-mono text-xs">
                                     <tr class="hover:bg-slate-50">
-                                        <td class="px-4 py-3 text-blue-700 font-bold">X-Client-ID</td>
-                                        <td class="px-4 py-3 text-slate-600 font-sans">ID unik aplikasi Anda (dimulai dengan <code>client_</code>)</td>
-                                        <td class="px-4 py-3"><span class="px-2 py-0.5 bg-red-50 text-red-700 border border-red-200 rounded-full text-[10px] font-bold">Ya</span></td>
+                                        <td class="px-4 py-3 text-indigo-700 font-bold">Authorization</td>
+                                        <td class="px-4 py-3 text-slate-700"><code>Bearer wgr_live_xxxxxxxxxxxxxxxxxxxx</code></td>
+                                        <td class="px-4 py-3"><span class="px-2 py-0.5 bg-green-50 text-green-700 border border-green-200 rounded-full text-[10px] font-bold font-sans">Direkomendasikan</span></td>
                                     </tr>
                                     <tr class="hover:bg-slate-50">
-                                        <td class="px-4 py-3 text-blue-700 font-bold">X-Client-Secret</td>
-                                        <td class="px-4 py-3 text-slate-600 font-sans">Secret token rahasia Anda (dimulai dengan <code>secret_</code>)</td>
-                                        <td class="px-4 py-3"><span class="px-2 py-0.5 bg-red-50 text-red-700 border border-red-200 rounded-full text-[10px] font-bold">Ya</span></td>
+                                        <td class="px-4 py-3 text-indigo-700 font-bold">X-API-Token</td>
+                                        <td class="px-4 py-3 text-slate-700"><code>wgr_live_xxxxxxxxxxxxxxxxxxxx</code></td>
+                                        <td class="px-4 py-3"><span class="px-2 py-0.5 bg-slate-100 text-slate-700 border border-slate-200 rounded-full text-[10px] font-bold font-sans">Didukung</span></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -146,22 +150,21 @@
                     </div>
 
                     <div>
-                        <h4 class="text-sm font-bold text-slate-800 mb-2">Scope (Hak Akses)</h4>
+                        <h4 class="text-sm font-bold text-slate-800 mb-2">Scope (Hak Akses Token)</h4>
                         <div class="overflow-x-auto rounded-xl border border-slate-200">
                             <table class="w-full text-sm text-left">
                                 <thead class="bg-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                    <tr><th class="px-4 py-2.5">Scope</th><th class="px-4 py-2.5">Akses</th></tr>
+                                    <tr><th class="px-4 py-2.5">Scope</th><th class="px-4 py-2.5">Akses Data</th></tr>
                                 </thead>
                                 <tbody class="divide-y divide-slate-100 text-xs">
                                     @foreach([
-                                        ['students.read',   'Membaca data publik siswa (nama, NIS, kelas)'],
-                                        ['students.private','Membaca data sensitif siswa (NIK, kontak, alamat, orang tua)'],
-                                        ['teachers.read',   'Membaca data guru & tendik'],
-                                        ['classes.read',    'Membaca data rombel dan jurusan'],
-                                        ['*',               'Akses penuh ke semua endpoint (Super Admin)'],
-                                    ] as [$scope, $desc])
+                                        ['students.read',   'Membaca data publik siswa RPL/PPLG (nama, NIS, kelas, gender)'],
+                                        ['students.private','Membaca data privat/sensitif siswa (NIK, kontak, alamat, ortu)'],
+                                        ['teachers.read',   'Membaca data guru produktif RPL & tendik'],
+                                        ['classes.read',    'Membaca data rombel dan konsentrasi keahlian RPL'],
+                                    ] as [$sc, $desc])
                                     <tr class="hover:bg-slate-50">
-                                        <td class="px-4 py-3 font-mono text-violet-700 font-bold">{{ $scope }}</td>
+                                        <td class="px-4 py-3 font-mono font-bold text-indigo-700">{{ $sc }}</td>
                                         <td class="px-4 py-3 text-slate-600">{{ $desc }}</td>
                                     </tr>
                                     @endforeach
@@ -169,60 +172,69 @@
                             </table>
                         </div>
                     </div>
-
-                    <div>
-                        <h4 class="text-sm font-bold text-slate-800 mb-2">Health Check (Tanpa Autentikasi)</h4>
-                        @include('admin.partials.api-endpoint', [
-                            'method' => 'GET',
-                            'path' => '/api/health',
-                            'desc' => 'Cek status server. Tidak memerlukan autentikasi.',
-                            'response' => '{"status":"ok","database":"connected","api":"running","timestamp":"2026-08-22T07:00:00+07:00"}',
-                        ])
-                    </div>
                 </div>
             </div>
 
             <!-- ===== SISWA ===== -->
             <div x-show="activeSection === 'students'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-                    <h3 class="text-lg font-bold text-slate-900">👩‍🎓 Endpoint Siswa</h3>
-                    <p class="text-sm text-slate-500 -mt-4">Memerlukan scope: <code class="bg-violet-50 text-violet-700 px-1.5 py-0.5 rounded border border-violet-200 font-mono text-xs">students.read</code></p>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">👩‍🎓 Data Siswa WargaRPL</h3>
+                        <p class="text-sm text-slate-500 mt-1">Endpoint untuk mengambil daftar siswa-siswi jurusan RPL & PPLG.</p>
+                    </div>
 
                     @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/students',
-                        'desc' => 'Ambil daftar semua siswa dengan pagination. Mendukung berbagai filter.',
-                        'params' => [
-                            ['name'=>'page',          'type'=>'integer', 'desc'=>'Halaman ke-berapa (default: 1)'],
-                            ['name'=>'search',        'type'=>'string',  'desc'=>'Cari berdasarkan nama, NIS, atau NISN'],
-                            ['name'=>'gender',        'type'=>'string',  'desc'=>'Filter jenis kelamin: L atau P'],
-                            ['name'=>'status',        'type'=>'string',  'desc'=>'Filter status: active, graduated, alumni, moved, left'],
-                            ['name'=>'grade',         'type'=>'integer', 'desc'=>'Filter tingkat: 10, 11, atau 12'],
-                            ['name'=>'major',         'type'=>'string',  'desc'=>'Filter kode jurusan: PPLG, DPIB, TJKT, dll'],
-                            ['name'=>'class',         'type'=>'string',  'desc'=>'Filter nama kelas: X PPLG 1 (spasi → strip: X-PPLG-1)'],
-                            ['name'=>'updated_since', 'type'=>'string',  'desc'=>'Delta sync - ISO 8601: 2026-08-01T00:00:00Z'],
+                        'method'      => 'GET',
+                        'path'        => '/api/v1/students',
+                        'scope'       => 'students.read',
+                        'description' => 'Mengambil daftar siswa RPL/PPLG terdaftar dengan pagination & filter.',
+                        'params'      => [
+                            ['name'=>'grade',         'type'=>'integer', 'desc'=>'Tingkat kelas: 10, 11, atau 12'],
+                            ['name'=>'major',         'type'=>'string',  'desc'=>'Kode konsentrasi keahlian: PPLG atau RPL'],
+                            ['name'=>'class',         'type'=>'string',  'desc'=>'Nama rombel, contoh: X-PPLG-1, XI-RPL-2'],
+                            ['name'=>'search',        'type'=>'string',  'desc'=>'Pencarian nama atau NIS siswa'],
+                            ['name'=>'per_page',      'type'=>'integer', 'desc'=>'Jumlah data per halaman (default 25, maks 100)'],
+                            ['name'=>'updated_since', 'type'=>'string',  'desc'=>'Filter perubahan sejak ISO 8601 UTC'],
                         ],
-                        'response' => '{"success":true,"data":[{"uuid":"xxx","nis":"12631079","nisn":"0118428509","full_name":"AFIFA","gender":"P","status":"Aktif","class":{"name":"X DPIB 1","major":"DPIB"},"updated_at":"2026-08-22T06:00:00.000Z"}],"meta":{"current_page":1,"last_page":51,"per_page":50,"total":2534}}',
+                        'response'    => '{
+  "success": true,
+  "data": [
+    {
+      "uuid": "9e1c2b3a-...",
+      "nis": "222310001",
+      "nisn": "0061234567",
+      "full_name": "Ahmad Dani",
+      "gender": "L",
+      "status": "Aktif",
+      "class": {
+        "name": "X PPLG 1",
+        "grade_level": 10,
+        "major": "PPLG"
+      }
+    }
+  ],
+  "meta": { "total": 216, "page": 1, "per_page": 25, "last_page": 9 }
+}'
                     ])
 
                     @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/students/{uuid}',
-                        'desc' => 'Ambil detail lengkap satu siswa berdasarkan UUID. Dengan scope students.private, data sensitif ikut dikembalikan.',
-                        'params' => [
-                            ['name'=>'uuid', 'type'=>'string', 'desc'=>'UUID siswa (dari endpoint list)'],
+                        'method'      => 'GET',
+                        'path'        => '/api/v1/students/{uuid}',
+                        'scope'       => 'students.read',
+                        'description' => 'Mengambil detail profil satu siswa berdasarkan UUID.',
+                        'params'      => [
+                            ['name'=>'uuid', 'type'=>'string (path)', 'desc'=>'UUID unik siswa']
                         ],
-                        'response' => '{"success":true,"data":{"uuid":"abc-def","nis":"12631079","full_name":"AFIFA","gender":"P","birth_date":"2008-05-15","class":{"name":"X DPIB 1","major":"DPIB","grade":10}}}',
-                    ])
-
-                    @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/students/{uuid}/class-history',
-                        'desc' => 'Riwayat kelas siswa dari tahun ajaran ke tahun ajaran.',
-                        'params' => [
-                            ['name'=>'uuid', 'type'=>'string', 'desc'=>'UUID siswa'],
-                        ],
-                        'response' => '{"success":true,"data":[{"class_name":"X DPIB 1","school_year":"2026/2027","semester":"Ganjil","attendance_number":5}]}',
+                        'response'    => '{
+  "success": true,
+  "data": {
+    "uuid": "9e1c2b3a-...",
+    "nis": "222310001",
+    "full_name": "Ahmad Dani",
+    "class": "X PPLG 1",
+    "major": "PPLG"
+  }
+}'
                     ])
                 </div>
             </div>
@@ -230,29 +242,31 @@
             <!-- ===== GURU & TENDIK ===== -->
             <div x-show="activeSection === 'employees'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-                    <h3 class="text-lg font-bold text-slate-900">👨‍🏫 Endpoint Guru & Tendik</h3>
-                    <p class="text-sm text-slate-500 -mt-4">Memerlukan scope: <code class="bg-violet-50 text-violet-700 px-1.5 py-0.5 rounded border border-violet-200 font-mono text-xs">teachers.read</code></p>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">👨‍🏫 Data Guru & Tendik RPL</h3>
+                        <p class="text-sm text-slate-500 mt-1">Endpoint untuk membaca data pendidik produktif RPL.</p>
+                    </div>
 
                     @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/employees',
-                        'desc' => 'Daftar seluruh guru dan tenaga kependidikan.',
-                        'params' => [
-                            ['name'=>'type',   'type'=>'string', 'desc'=>'Filter: guru atau tendik'],
-                            ['name'=>'status', 'type'=>'string', 'desc'=>'Filter status: Active, Inactive'],
-                            ['name'=>'search', 'type'=>'string', 'desc'=>'Cari berdasarkan nama atau NIP'],
+                        'method'      => 'GET',
+                        'path'        => '/api/v1/employees',
+                        'scope'       => 'teachers.read',
+                        'description' => 'Mengambil daftar pendidik produktif RPL & tendik.',
+                        'params'      => [
+                            ['name'=>'search',   'type'=>'string', 'desc'=>'Cari nama atau NIP'],
+                            ['name'=>'per_page', 'type'=>'integer', 'desc'=>'Data per halaman']
                         ],
-                        'response' => '{"success":true,"data":[{"uuid":"xxx","nip":"198001012005011001","full_name":"Budi Santoso, S.Pd","type":"Guru","status":"Active","subjects":["Matematika"]}],"meta":{...}}',
-                    ])
-
-                    @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/employees/{uuid}',
-                        'desc' => 'Detail lengkap satu guru/tendik.',
-                        'params' => [
-                            ['name'=>'uuid', 'type'=>'string', 'desc'=>'UUID guru/tendik'],
-                        ],
-                        'response' => '{"success":true,"data":{"uuid":"xxx","nip":"...","full_name":"...","type":"Guru","status":"Active"}}',
+                        'response'    => '{
+  "success": true,
+  "data": [
+    {
+      "uuid": "a1b2c3d4-...",
+      "nip": "198001012005011001",
+      "full_name": "Guru Produktif RPL, S.Kom.",
+      "ptk_type": "Guru Produktif"
+    }
+  ]
+}'
                     ])
                 </div>
             </div>
@@ -260,25 +274,27 @@
             <!-- ===== KELAS & JURUSAN ===== -->
             <div x-show="activeSection === 'classes'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-                    <h3 class="text-lg font-bold text-slate-900">🏫 Endpoint Kelas & Jurusan</h3>
-                    <p class="text-sm text-slate-500 -mt-4">Memerlukan scope: <code class="bg-violet-50 text-violet-700 px-1.5 py-0.5 rounded border border-violet-200 font-mono text-xs">classes.read</code></p>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">🏫 Rombongan Belajar RPL & PPLG</h3>
+                        <p class="text-sm text-slate-500 mt-1">Data rombel aktif untuk jurusan RPL dan PPLG.</p>
+                    </div>
 
                     @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/classes',
-                        'desc' => 'Daftar seluruh rombel aktif beserta jurusan dan wali kelas.',
-                        'params' => [],
-                        'response' => '{"success":true,"data":[{"id":1,"name":"X DPIB 1","grade_level":10,"major":{"code":"DPIB","name":"Desain Permodelan dan Informasi Bangunan"},"homeroom_teacher":"Budi S."}]}',
-                    ])
-
-                    @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/classes/{id_or_name}/students',
-                        'desc' => 'Daftar siswa dalam satu kelas. Bisa gunakan ID numerik atau nama kelas.',
-                        'params' => [
-                            ['name'=>'id_or_name', 'type'=>'string', 'desc'=>'ID numerik kelas atau nama kelas (e.g. X-DPIB-1)'],
+                        'method'      => 'GET',
+                        'path'        => '/api/v1/classes',
+                        'scope'       => 'classes.read',
+                        'description' => 'Daftar semua rombel RPL/PPLG tahun ajaran aktif.',
+                        'params'      => [
+                            ['name'=>'grade', 'type'=>'integer', 'desc'=>'Filter tingkat: 10, 11, 12']
                         ],
-                        'response' => '{"success":true,"class":"X DPIB 1","total":36,"data":[{"uuid":"...","nis":"12631079","full_name":"AFIFA","gender":"P","attendance_number":1}]}',
+                        'response'    => '{
+  "success": true,
+  "data": [
+    { "id": 1, "name": "X PPLG 1", "grade_level": 10, "major": "PPLG" },
+    { "id": 2, "name": "XI PPLG 1", "grade_level": 11, "major": "PPLG" },
+    { "id": 3, "name": "XII RPL 1", "grade_level": 12, "major": "RPL" }
+  ]
+}'
                     ])
                 </div>
             </div>
@@ -286,76 +302,57 @@
             <!-- ===== STATISTIK ===== -->
             <div x-show="activeSection === 'stats'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-                    <h3 class="text-lg font-bold text-slate-900">📊 Statistik & Referensi</h3>
-                    <p class="text-sm text-slate-500 -mt-4">Endpoint ini tidak memerlukan scope khusus, hanya autentikasi dasar.</p>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">📊 Statistik WargaRPL</h3>
+                        <p class="text-sm text-slate-500 mt-1">Ringkasan total siswa dan sebaran per angkatan.</p>
+                    </div>
 
                     @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/statistics/students',
-                        'desc' => 'Statistik ringkas jumlah siswa: total, jenis kelamin, dan per tingkat.',
-                        'params' => [],
-                        'response' => '{"success":true,"data":{"total":2534,"male":1102,"female":1432,"grade":{"10":862,"11":844,"12":828}}}',
-                    ])
-
-                    @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/school-years',
-                        'desc' => 'Daftar tahun ajaran.',
-                        'params' => [],
-                        'response' => '{"success":true,"data":[{"id":1,"name":"2026/2027","is_active":true}]}',
-                    ])
-
-                    @include('admin.partials.api-endpoint', [
-                        'method' => 'GET',
-                        'path' => '/api/v1/semesters',
-                        'desc' => 'Daftar semester beserta status aktif.',
-                        'params' => [],
-                        'response' => '{"success":true,"data":[{"id":1,"school_year":"2026/2027","semester":"Ganjil","is_active":true}]}',
+                        'method'      => 'GET',
+                        'path'        => '/api/v1/statistics/students',
+                        'scope'       => 'None (Token Bebas Scope)',
+                        'description' => 'Statistik total siswa RPL, gender, dan tingkat kelas.',
+                        'params'      => [],
+                        'response'    => '{
+  "success": true,
+  "data": {
+    "total": 216,
+    "male": 140,
+    "female": 76,
+    "by_grade": { "10": 72, "11": 72, "12": 72 }
+  }
+}'
                     ])
                 </div>
             </div>
 
             <!-- ===== ERROR CODES ===== -->
             <div x-show="activeSection === 'errors'" x-cloak>
-                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-                    <h3 class="text-lg font-bold text-slate-900 mb-4">⚠️ Kode Error</h3>
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-slate-900">⚠️ Kode Respon HTTP</h3>
                     <div class="overflow-x-auto rounded-xl border border-slate-200">
                         <table class="w-full text-sm text-left">
                             <thead class="bg-slate-50 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                <tr>
-                                    <th class="px-4 py-3">HTTP Code</th>
-                                    <th class="px-4 py-3">Arti</th>
-                                    <th class="px-4 py-3">Solusi</th>
-                                </tr>
+                                <tr><th class="px-4 py-2.5">HTTP Code</th><th class="px-4 py-2.5">Arti</th><th class="px-4 py-2.5">Penyebab & Solusi</th></tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100 text-xs">
                                 @foreach([
-                                    ['200','OK','Request berhasil. Data tersedia di field <code>data</code>.', 'bg-emerald-50 text-emerald-700'],
-                                    ['400','Bad Request','Parameter tidak valid (mis. format tanggal salah).', 'bg-amber-50 text-amber-700'],
-                                    ['401','Unauthorized','Header X-Client-ID atau X-Client-Secret salah/tidak ada.', 'bg-red-50 text-red-700'],
-                                    ['403','Forbidden','Scope tidak mencukupi. Minta admin tambahkan scope yang diperlukan.', 'bg-orange-50 text-orange-700'],
-                                    ['404','Not Found','Data yang dicari tidak ditemukan.', 'bg-slate-50 text-slate-600'],
-                                    ['429','Too Many Requests','Rate limit tercapai (default: 60 req/menit). Tunggu sebentar.', 'bg-red-50 text-red-700'],
-                                    ['500','Server Error','Kesalahan internal server. Hubungi admin SobatData Neper.', 'bg-red-50 text-red-700'],
-                                ] as [$code, $status, $desc, $badge])
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-black border {{ $badge }}">{{ $code }}</span></td>
+                                    ['200','OK','Permintaan berhasil diproses.', 'bg-emerald-50 text-emerald-700'],
+                                    ['400','Bad Request','Parameter tidak valid (misal: format tanggal).', 'bg-amber-50 text-amber-700'],
+                                    ['401','Unauthorized','Token API tidak ada atau tidak valid.', 'bg-red-50 text-red-700'],
+                                    ['403','Forbidden','Token tidak memiliki scope yang dibutuhkan.', 'bg-orange-50 text-orange-700'],
+                                    ['404','Not Found','Data siswa atau rombel tidak ditemukan.', 'bg-slate-50 text-slate-700'],
+                                    ['429','Rate Limit Exceeded','Melebihi batas request per menit.', 'bg-purple-50 text-purple-700'],
+                                    ['500','Server Error','Kesalahan internal server. Hubungi admin WargaRPL.', 'bg-red-50 text-red-700'],
+                                ] as [$code, $status, $desc, $color])
+                                <tr>
+                                    <td class="px-4 py-3 font-mono font-bold"><span class="px-2 py-0.5 rounded-full {{ $color }}">{{ $code }}</span></td>
                                     <td class="px-4 py-3 font-bold text-slate-800">{{ $status }}</td>
-                                    <td class="px-4 py-3 text-slate-600">{!! $desc !!}</td>
+                                    <td class="px-4 py-3 text-slate-600">{{ $desc }}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="mt-5">
-                        <h4 class="text-sm font-bold text-slate-800 mb-2">Format Response Error</h4>
-                        <div class="bg-slate-900 rounded-xl p-4 font-mono text-xs text-rose-300">
-                            <div>&#123;</div>
-                            <div class="pl-4"><span class="text-slate-400">"success"</span>: <span class="text-red-400">false</span>,</div>
-                            <div class="pl-4"><span class="text-slate-400">"message"</span>: <span class="text-amber-300">"Kredensial API tidak valid atau aplikasi dinonaktifkan."</span></div>
-                            <div>&#125;</div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -363,20 +360,21 @@
             <!-- ===== CONTOH KODE ===== -->
             <div x-show="activeSection === 'examples'" x-cloak>
                 <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-6">
-                    <h3 class="text-lg font-bold text-slate-900">💻 Contoh Kode Integrasi</h3>
+                    <h3 class="text-lg font-bold text-slate-900">💻 Contoh Kode Integrasi Token</h3>
 
                     <!-- JavaScript / Fetch -->
                     <div>
                         <div class="flex items-center justify-between mb-2">
-                            <h4 class="text-sm font-bold text-slate-800">JavaScript (Fetch API)</h4>
+                            <h4 class="text-sm font-bold text-slate-800">JavaScript / Node.js (Fetch API)</h4>
                             <button onclick="navigator.clipboard.writeText(document.getElementById('code-js').innerText)"
-                                class="text-xs text-slate-400 hover:text-slate-700 font-semibold transition">Salin</button>
+                                class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition">Salin Kode</button>
                         </div>
-                        <pre id="code-js" class="bg-slate-900 text-emerald-300 rounded-xl p-4 font-mono text-xs overflow-x-auto leading-relaxed">const response = await fetch('https://domain-anda.com/api/v1/students?grade=10', {
+                        <pre id="code-js" class="bg-slate-900 text-emerald-300 rounded-xl p-4 font-mono text-xs overflow-x-auto leading-relaxed">const API_TOKEN = 'wgr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+
+const response = await fetch('{{ url('/api/v1/students?grade=10') }}', {
   method: 'GET',
   headers: {
-    'X-Client-ID': 'client_xxxxxxxxxxxxxxxxxxxx',
-    'X-Client-Secret': 'secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'Authorization': `Bearer ${API_TOKEN}`,
     'Accept': 'application/json',
   }
 });
@@ -384,11 +382,23 @@
 const { success, data, meta } = await response.json();
 
 if (success) {
-  console.log(`Total: ${meta.total} siswa`);
+  console.log(`Total: ${meta.total} Siswa WargaRPL`);
   data.forEach(siswa => {
-    console.log(`${siswa.nis} - ${siswa.full_name} (${siswa.class?.name})`);
+    console.log(`${siswa.nis} - ${siswa.full_name} (${siswa.class_name})`);
   });
 }</pre>
+                    </div>
+
+                    <!-- cURL CLI -->
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="text-sm font-bold text-slate-800">cURL (Terminal / Command Line)</h4>
+                            <button onclick="navigator.clipboard.writeText(document.getElementById('code-curl').innerText)"
+                                class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition">Salin Kode</button>
+                        </div>
+                        <pre id="code-curl" class="bg-slate-900 text-cyan-300 rounded-xl p-4 font-mono text-xs overflow-x-auto leading-relaxed">curl -X GET "{{ url('/api/v1/students?grade=10') }}" \
+  -H "Authorization: Bearer wgr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
+  -H "Accept: application/json"</pre>
                     </div>
 
                     <!-- PHP / cURL -->
@@ -396,18 +406,19 @@ if (success) {
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-sm font-bold text-slate-800">PHP (cURL)</h4>
                             <button onclick="navigator.clipboard.writeText(document.getElementById('code-php').innerText)"
-                                class="text-xs text-slate-400 hover:text-slate-700 font-semibold transition">Salin</button>
+                                class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition">Salin Kode</button>
                         </div>
                         <pre id="code-php" class="bg-slate-900 text-blue-300 rounded-xl p-4 font-mono text-xs overflow-x-auto leading-relaxed">&lt;?php
+
+$token = 'wgr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-  CURLOPT_URL => 'https://domain-anda.com/api/v1/students',
+  CURLOPT_URL => '{{ url('/api/v1/students') }}',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_HTTPHEADER => [
-    'X-Client-ID: client_xxxxxxxxxxxxxxxxxxxx',
-    'X-Client-Secret: secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    "Authorization: Bearer {$token}",
     'Accept: application/json',
   ],
 ]);
@@ -429,29 +440,28 @@ if ($data['success']) {
                         <div class="flex items-center justify-between mb-2">
                             <h4 class="text-sm font-bold text-slate-800">Python (requests)</h4>
                             <button onclick="navigator.clipboard.writeText(document.getElementById('code-python').innerText)"
-                                class="text-xs text-slate-400 hover:text-slate-700 font-semibold transition">Salin</button>
+                                class="text-xs text-indigo-600 hover:text-indigo-800 font-semibold transition">Salin Kode</button>
                         </div>
                         <pre id="code-python" class="bg-slate-900 text-yellow-300 rounded-xl p-4 font-mono text-xs overflow-x-auto leading-relaxed">import requests
 
+token = 'wgr_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 headers = {
-    'X-Client-ID': 'client_xxxxxxxxxxxxxxxxxxxx',
-    'X-Client-Secret': 'secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    'Authorization': f'Bearer {token}',
     'Accept': 'application/json',
 }
 
-r = requests.get('https://domain-anda.com/api/v1/students', headers=headers, params={'grade': 10})
+r = requests.get('{{ url('/api/v1/students') }}', headers=headers, params={'grade': 10})
 result = r.json()
 
-if result['success']:
+if result.get('success'):
     for siswa in result['data']:
         print(f"{siswa['nis']} - {siswa['full_name']}")</pre>
                     </div>
 
                     <!-- CORS Note -->
-                    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-800">
-                        <strong>🌐 Catatan CORS untuk Frontend Web:</strong><br>
-                        Jika menggunakan JavaScript di browser (React, Vue, dsb.), panggil API dari <strong>backend server</strong> Anda (server-side), bukan langsung dari browser. Menyimpan <code>X-Client-Secret</code> di frontend publik adalah risiko keamanan.<br><br>
-                        Alternatifnya, minta admin SobatData Neper untuk mengaktifkan CORS whitelist untuk domain Anda.
+                    <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-xs text-indigo-900 leading-relaxed">
+                        <strong>🌐 Catatan Keamanan:</strong><br>
+                        Panggil API WargaRPL dari <strong>backend server</strong> aplikasi Anda (server-side). Jangan expose API token ke client-side frontend publik tanpa proxy/backend.
                     </div>
                 </div>
             </div>

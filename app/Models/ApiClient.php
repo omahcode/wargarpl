@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ApiClient extends Model
 {
-    protected $fillable = ['name', 'client_id', 'secret_token', 'scopes', 'rate_limit', 'status'];
+    protected $fillable = ['name', 'token', 'client_id', 'secret_token', 'scopes', 'rate_limit', 'status'];
 
     protected function casts(): array
     {

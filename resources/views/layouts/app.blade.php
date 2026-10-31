@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Dashboard') - SobatData Neper</title>
-    <link rel="icon" type="image/svg+xml" href="{{ asset('logo-smk.svg') }}">
+    <title>@yield('title', 'Dashboard') - WargaRPL</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('wargarpl-logo.svg') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet" />
@@ -45,10 +45,13 @@
         <!-- Header/Logo -->
         <div class="h-16 px-6 flex items-center justify-between border-b border-slate-900 bg-slate-950">
             <div class="flex items-center gap-3">
-                <img src="{{ asset('logo-smk.svg') }}" class="w-8 h-8 object-contain" alt="Logo SMK" />
+                <img src="{{ asset('wargarpl-logo.svg') }}" class="w-8 h-8 object-contain rounded-lg shadow-sm" alt="Logo WargaRPL" />
                 <div>
-                    <h1 class="text-xs font-bold text-white tracking-wide">SobatData Neper</h1>
-                    <p class="text-[9px] text-slate-500 font-semibold uppercase tracking-wider">SMKN 1 Cirebon</p>
+                    <h1 class="text-xs font-bold text-white tracking-wide flex items-center gap-1.5">
+                        <span>WargaRPL</span>
+                        <span class="text-[9px] px-1.5 py-0.2 bg-indigo-500/20 text-cyan-400 border border-cyan-500/30 rounded font-mono font-semibold">PRO</span>
+                    </h1>
+                    <p class="text-[9px] text-slate-400 font-semibold uppercase tracking-wider">Bank Data RPL & PPLG</p>
                 </div>
             </div>
             <!-- Close Button Mobile -->
@@ -108,11 +111,11 @@
                 </div>
 
                 <div>
-                    <div class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Integrasi</div>
+                    <div class="px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Integrasi API</div>
                     <div class="space-y-1">
                         <a href="{{ route('admin.clients.index') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('admin.clients.*') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
-                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
-                            API Management
+                            <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path></svg>
+                            API Token
                         </a>
                         <a href="{{ route('admin.api-docs') }}" class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition {{ request()->routeIs('admin.api-docs') ? 'bg-slate-900 text-white font-semibold' : 'hover:bg-slate-900/50 hover:text-white' }}">
                             <svg class="w-5 h-5 text-slate-400 group-hover:text-white transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
@@ -175,19 +178,19 @@
         <div class="p-4 border-t border-slate-900 bg-slate-950/50">
             <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-900 space-y-3">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-                        <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    <div class="w-8 h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center">
+                        <img src="{{ asset('wargarpl-logo.svg') }}" class="w-5 h-5 object-contain" alt="WargaRPL Icon" />
                     </div>
                     <div>
-                        <h4 class="text-[10px] font-bold text-white tracking-wide">Sistem Informasi PTK</h4>
-                        <p class="text-[9px] text-slate-500 font-medium">SMKN 1 Cirebon</p>
+                        <h4 class="text-[10px] font-bold text-white tracking-wide">Bank Data WargaRPL</h4>
+                        <p class="text-[9px] text-slate-400 font-medium">Khusus Siswa RPL & PPLG</p>
                     </div>
                 </div>
                 <div class="flex items-center justify-between text-[9px] text-slate-500 font-medium border-t border-slate-900/50 pt-2.5">
-                    <span>&copy; 2026 SobatData Neper</span>
-                    <span class="flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                        Sistem Online
+                    <span>&copy; {{ date('Y') }} WargaRPL</span>
+                    <span class="flex items-center gap-1 text-emerald-400">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        Portal Aktif
                     </span>
                 </div>
             </div>

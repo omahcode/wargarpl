@@ -9,8 +9,13 @@
         <a href="{{ route('admin.students.index') }}" class="text-xs font-semibold text-slate-500 hover:text-slate-900 inline-flex items-center gap-1 transition">
             &larr; Kembali ke Daftar Siswa
         </a>
-        <h2 class="text-2xl font-bold text-slate-900 mt-2 font-display">Import / Export Master Data</h2>
-        <p class="text-sm text-slate-500 font-medium">Unggah data siswa, guru, atau tenaga kependidikan menggunakan template Excel resmi (.xlsx).</p>
+        <h2 class="text-2xl font-bold text-slate-900 mt-2 font-display">Import / Export Master Data WargaRPL</h2>
+        <p class="text-sm text-slate-500 font-medium">Unggah data siswa RPL/PPLG atau guru pendidik menggunakan template Excel resmi Dapodik.</p>
+        
+        <div class="mt-3 p-3.5 bg-indigo-50 border border-indigo-100 rounded-xl flex items-center gap-3 text-xs text-indigo-900 font-medium">
+            <span class="w-6 h-6 rounded-lg bg-indigo-600 text-white flex items-center justify-center shrink-0 font-bold text-xs">ℹ</span>
+            <span><strong>Catatan Khusus:</strong> Sistem ini diperuntukkan bagi siswa/siswi <strong>RPL & PPLG</strong>. Hanya baris siswa dengan rombel RPL / PPLG yang akan diproses ke dalam database.</span>
+        </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

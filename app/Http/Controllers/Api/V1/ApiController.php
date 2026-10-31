@@ -42,6 +42,12 @@ class ApiController extends Controller
         ->leftJoin('majors', 'classes.major_id', '=', 'majors.id')
         ->select('students.*', 'classes.name as class_name', 'majors.code as major_code');
 
+        // Scope specifically to RPL & PPLG students (WargaRPL)
+        $query->where(function ($q) {
+            $q->whereIn('majors.code', ['PPLG', 'RPL'])
+              ->orWhereNull('majors.code');
+        });
+
         // Apply filters
         if ($request->has('nis')) {
             $query->where('students.nis', $request->input('nis'));

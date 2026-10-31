@@ -14,7 +14,9 @@ class ApiClientController extends Controller
 {
     public function index()
     {
-        $clients = ApiClient::withCount('apiLogs')->get();
+        $clients = ApiClient::withCount('apiLogs')
+            ->orderBy('created_at', 'desc')
+            ->get();
         
         // API Logs for chart/dashboard
         $apiLogs = ApiLog::with('apiClient')
@@ -32,19 +34,21 @@ class ApiClientController extends Controller
             'rate_limit' => 'required|integer|min:1',
             'webhook_url' => 'nullable|url|max:255',
         ], [
-            'name.required' => 'Nama aplikasi wajib diisi.',
+            'name.required' => 'Nama aplikasi/token wajib diisi.',
             'scopes.required' => 'Izin akses (scopes) wajib dipilih.',
             'rate_limit.required' => 'Batas rate-limit wajib ditentukan.',
             'webhook_url.url' => 'Format URL Webhook tidak valid.',
         ]);
 
-        $clientId = strtoupper(str_replace(' ', '_', $request->input('name'))) . '_' . Str::upper(Str::random(4));
-        $plainSecret = Str::random(32);
+        // Generate Token WargaRPL
+        $plainToken = 'wgr_live_' . Str::random(40);
+        $clientId = 'wgr_' . Str::lower(Str::random(10));
 
         $client = new ApiClient();
         $client->name = $request->input('name');
+        $client->token = $plainToken;
         $client->client_id = $clientId;
-        $client->secret_token = Hash::make($plainSecret);
+        $client->secret_token = Hash::make($plainToken);
         $client->scopes = $request->input('scopes');
         $client->rate_limit = $request->input('rate_limit');
         $client->status = 'active';
@@ -63,16 +67,41 @@ class ApiClientController extends Controller
         \App\Models\AuditLog::create([
             'user_id' => auth()->id(),
             'event' => 'Generate API Token',
-            'description' => "Membuat API Client baru: {$client->name} (Client ID: {$clientId})",
+            'description' => "Membuat API Token baru: {$client->name}",
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
 
         return redirect()->route('admin.clients.index')->with([
-            'success' => 'Kredensial API berhasil dibuat.',
+            'success' => 'API Token berhasil dibuat.',
             'new_client_name' => $client->name,
+            'new_token' => $plainToken,
             'new_client_id' => $clientId,
-            'new_client_secret' => $plainSecret
+        ]);
+    }
+
+    public function regenerateToken($id)
+    {
+        $client = ApiClient::findOrFail($id);
+        $newToken = 'wgr_live_' . Str::random(40);
+
+        $client->token = $newToken;
+        $client->secret_token = Hash::make($newToken);
+        $client->save();
+
+        // Audit Log
+        \App\Models\AuditLog::create([
+            'user_id' => auth()->id(),
+            'event' => 'Regenerate API Token',
+            'description' => "Memperbarui token untuk API Client: {$client->name}",
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ]);
+
+        return redirect()->route('admin.clients.index')->with([
+            'success' => 'API Token baru berhasil dibuat ulang.',
+            'new_client_name' => $client->name,
+            'new_token' => $newToken,
         ]);
     }
 
@@ -85,12 +114,30 @@ class ApiClientController extends Controller
         // Audit Log
         \App\Models\AuditLog::create([
             'user_id' => auth()->id(),
-            'event' => $client->status === 'active' ? 'Activate API Client' : 'Revoke API Client',
-            'description' => "Mengubah status API Client {$client->name} menjadi {$client->status}.",
+            'event' => $client->status === 'active' ? 'Activate API Token' : 'Revoke API Token',
+            'description' => "Mengubah status API Token {$client->name} menjadi {$client->status}.",
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
         ]);
 
-        return back()->with('success', "Status API Client {$client->name} berhasil diperbarui.");
+        return back()->with('success', "Status API Token {$client->name} berhasil diperbarui.");
+    }
+
+    public function destroy($id)
+    {
+        $client = ApiClient::findOrFail($id);
+        $name = $client->name;
+        $client->delete();
+
+        // Audit Log
+        \App\Models\AuditLog::create([
+            'user_id' => auth()->id(),
+            'event' => 'Delete API Token',
+            'description' => "Menghapus API Token: {$name}",
+            'ip_address' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ]);
+
+        return back()->with('success', "API Token {$name} berhasil dihapus.");
     }
 }
