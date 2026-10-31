@@ -98,11 +98,13 @@
                         });
                     },
                     processChunk(index) {
-                        const chunkSize = 100;
+                        const chunkSize = 25;
                         fetch('{{ route('admin.students.import-chunk') }}', {
                             method: 'POST',
+                            credentials: 'same-origin',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Accept': 'application/json',
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             },
                             body: JSON.stringify({
@@ -110,7 +112,18 @@
                                 chunk_size: chunkSize
                             })
                         })
-                        .then(res => res.json())
+                        .then(async res => {
+                            let data;
+                            try {
+                                data = await res.json();
+                            } catch(e) {
+                                throw new Error('Respon server bukan JSON (HTTP ' + res.status + ').');
+                            }
+                            if (!res.ok) {
+                                throw new Error((data && data.message) ? data.message : ('Error HTTP ' + res.status));
+                            }
+                            return data;
+                        })
                         .then(data => {
                             if (data.success) {
                                 this.processed = data.total_processed;
@@ -130,7 +143,7 @@
                         })
                         .catch(err => {
                             this.importing = false;
-                            this.errorMsg = 'Koneksi gagal atau terputus.';
+                            this.errorMsg = err.message || 'Koneksi gagal atau terputus.';
                             alert(this.errorMsg);
                         });
                     }

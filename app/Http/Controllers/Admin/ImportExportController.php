@@ -650,16 +650,21 @@ class ImportExportController extends Controller
                     // Login Account (Password default: Tanggal Lahir DDMMYYYY)
                     $birthDate = $student->birth_date;
                     $defaultPassword = $birthDate ? date('dmY', strtotime($birthDate)) : 'Password123!';
+                    $studentEmail = $student->nis . '@smkn1-cirebon.sch.id';
 
-                    $user = User::where('student_id', $student->id)->orWhere('username', $student->nis)->first();
+                    $user = User::where('student_id', $student->id)
+                        ->orWhere('username', $student->nis)
+                        ->orWhere('email', $studentEmail)
+                        ->first();
+
                     if (!$user) {
                         User::create([
                             'name' => $student->full_name,
-                            'email' => $student->nis . '@smkn1-cirebon.sch.id',
+                            'email' => $studentEmail,
                             'username' => $student->nis,
                             'role' => 'siswa',
                             'student_id' => $student->id,
-                            'password' => Hash::make($defaultPassword),
+                            'password' => $defaultPassword,
                         ]);
                     }
 
@@ -708,16 +713,21 @@ class ImportExportController extends Controller
                     // Login Account (Password default: Tanggal Lahir DDMMYYYY)
                     $birthDate = $employee->birth_date;
                     $defaultPassword = $birthDate ? date('dmY', strtotime($birthDate)) : 'Password123!';
+                    $employeeEmail = $employee->nip . '@smkn1-cirebon.sch.id';
 
-                    $user = User::where('employee_id', $employee->id)->orWhere('username', $employee->nip)->first();
+                    $user = User::where('employee_id', $employee->id)
+                        ->orWhere('username', $employee->nip)
+                        ->orWhere('email', $employeeEmail)
+                        ->first();
+
                     if (!$user) {
                         User::create([
                             'name' => $employee->full_name,
-                            'email' => $employee->nip . '@smkn1-cirebon.sch.id',
+                            'email' => $employeeEmail,
                             'username' => $employee->nip,
                             'role' => 'employee',
                             'employee_id' => $employee->id,
-                            'password' => Hash::make($defaultPassword),
+                            'password' => $defaultPassword,
                         ]);
                     }
                     $processedCount++;
