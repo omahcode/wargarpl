@@ -261,25 +261,36 @@ class ImportExportController extends Controller
                 $seenNip = [];
 
                 for ($row = $startRow; $row <= $highestRow; $row++) {
-                    $nama = $sheet->getCell('B' . $row)->getValue();
-                    $nip = $sheet->getCell('G' . $row)->getValue();
-                    $gender = strtoupper(trim($sheet->getCell('D' . $row)->getValue() ?? ''));
+                    $nama = trim((string)$sheet->getCell('B' . $row)->getValue());
+                    $nip = trim((string)$sheet->getCell('G' . $row)->getValue());
+                    $nuptk = trim((string)$sheet->getCell('C' . $row)->getValue());
+                    $gender = strtoupper(trim((string)$sheet->getCell('D' . $row)->getValue() ?? ''));
                     
-                    if (empty($nama) && empty($nip)) {
+                    if (empty($nama) && empty($nip) && empty($nuptk)) {
                         continue;
                     }
 
+                    if ($nip === '-' || strtolower($nip) === 'null') {
+                        $nip = '';
+                    }
+                    if ($nuptk === '-' || strtolower($nuptk) === 'null') {
+                        $nuptk = '';
+                    }
+
                     $errors = [];
-                    if (empty($nip) || !is_numeric($nip)) {
-                        $errors[] = 'NIP wajib diisi dan harus berupa angka.';
-                    } else {
-                        if (isset($existingNip[$nip])) {
-                            $errors[] = "NIP {$nip} sudah digunakan di database.";
-                        }
-                        if (isset($seenNip[$nip])) {
-                            $errors[] = "NIP {$nip} ganda di dalam file ini.";
+                    // NIP is optional for non-PNS/Honorer, but if present, must be numeric & unique
+                    if (!empty($nip)) {
+                        if (!is_numeric($nip)) {
+                            $errors[] = 'NIP harus berupa angka jika diisi.';
                         } else {
-                            $seenNip[$nip] = true;
+                            if (isset($existingNip[$nip])) {
+                                $errors[] = "NIP {$nip} sudah digunakan di database.";
+                            }
+                            if (isset($seenNip[$nip])) {
+                                $errors[] = "NIP {$nip} ganda di dalam file ini.";
+                            } else {
+                                $seenNip[$nip] = true;
+                            }
                         }
                     }
 
@@ -295,13 +306,13 @@ class ImportExportController extends Controller
                         $errorRows[] = [
                             'row' => $row,
                             'message' => implode('; ', $errors),
-                            'data' => ['nip' => $nip, 'nama' => $nama, 'gender' => $gender]
+                            'data' => ['nip' => $nip ?: '-', 'nama' => $nama, 'gender' => $gender]
                         ];
                     } else {
                         $validRows[] = [
                             'full_name' => $nama,
-                            'nip' => $nip,
-                            'nuptk' => $sheet->getCell('C' . $row)->getValue(),
+                            'nip' => $nip ?: null,
+                            'nuptk' => $nuptk ?: null,
                             'gender' => $gender,
                             'birth_place' => $sheet->getCell('E' . $row)->getValue(),
                             'birth_date' => $this->parseExcelDate($sheet->getCell('F' . $row)->getValue()),
@@ -430,41 +441,63 @@ class ImportExportController extends Controller
                 }
             } else {
                 foreach ($validRows as $row) {
-                    $employee = Employee::create([
-                        'uuid' => Str::uuid()->toString(),
-                        'nip' => $row['nip'],
-                        'nuptk' => $row['nuptk'],
-                        'full_name' => $row['full_name'],
-                        'gender' => $row['gender'],
-                        'birth_place' => $row['birth_place'],
-                        'birth_date' => $row['birth_date'],
-                        'religion' => $row['religion'],
-                        'status' => 'Aktif',
-                        'ptk_type' => $row['ptk_type'],
-                        'employment_type' => $row['status_kepegawaian'],
-                        'address' => $row['address'],
-                        'rt' => $row['rt'],
-                        'rw' => $row['rw'],
-                        'village' => $row['village'],
-                        'district' => $row['district'],
-                        'postal_code' => $row['postal_code'],
-                        'phone' => $row['phone'],
-                        'whatsapp' => $row['whatsapp'],
-                        'email' => $row['email'],
+                    $addressParts = array_filter([
+                        $row['address'] ?? null,
+                        (!empty($row['rt']) || !empty($row['rw'])) ? 'RT ' . ($row['rt'] ?? '-') . ' / RW ' . ($row['rw'] ?? '-') : null,
+                        !empty($row['village']) ? 'Kel. ' . $row['village'] : null,
+                        !empty($row['district']) ? 'Kec. ' . $row['district'] : null,
+                        !empty($row['postal_code']) ? 'Kode Pos ' . $row['postal_code'] : null,
                     ]);
+                    $fullAddress = !empty($addressParts) ? implode(', ', $addressParts) : ($row['address'] ?? null);
+
+                    if (!empty($row['nip'])) {
+                        $employee = Employee::firstOrNew(['nip' => $row['nip']]);
+                    } elseif (!empty($row['nuptk'])) {
+                        $employee = Employee::firstOrNew(['nuptk' => $row['nuptk']]);
+                    } else {
+                        $employee = new Employee();
+                    }
+
+                    if (!$employee->exists) {
+                        $employee->uuid = Str::uuid()->toString();
+                    }
+                    $employee->nip = $row['nip'] ?: null;
+                    $employee->nuptk = $row['nuptk'] ?: null;
+                    $employee->full_name = $row['full_name'];
+                    $employee->gender = $row['gender'];
+                    $employee->birth_place = $row['birth_place'];
+                    $employee->birth_date = $row['birth_date'];
+                    $employee->religion = $row['religion'];
+                    $employee->status = 'Aktif';
+                    $employee->ptk_type = $row['ptk_type'];
+                    $employee->employment_type = $row['status_kepegawaian'];
+                    $employee->address = $fullAddress;
+                    $employee->phone = $row['phone'];
+                    $employee->whatsapp = $row['whatsapp'];
+                    $employee->email = $row['email'];
+                    $employee->save();
 
                     // Login Account (Password default: Tanggal Lahir DDMMYYYY)
                     $birthDate = $employee->birth_date;
                     $defaultPassword = $birthDate ? date('dmY', strtotime($birthDate)) : 'Password123!';
+                    $loginIdentifier = $employee->nip ?: ($employee->nuptk ?: 'ptk_' . Str::slug($employee->full_name, '_'));
+                    $employeeEmail = $employee->email ?: ($loginIdentifier . '@smkn1-cirebon.sch.id');
 
-                    User::create([
-                        'name' => $employee->full_name,
-                        'email' => $employee->nip . '@smkn1-cirebon.sch.id',
-                        'username' => $employee->nip,
-                        'role' => 'employee',
-                        'employee_id' => $employee->id,
-                        'password' => Hash::make($defaultPassword),
-                    ]);
+                    $user = User::where('employee_id', $employee->id)
+                        ->orWhere('username', $loginIdentifier)
+                        ->orWhere('email', $employeeEmail)
+                        ->first();
+
+                    if (!$user) {
+                        User::create([
+                            'name' => $employee->full_name,
+                            'email' => $employeeEmail,
+                            'username' => $loginIdentifier,
+                            'role' => 'employee',
+                            'employee_id' => $employee->id,
+                            'password' => $defaultPassword,
+                        ]);
+                    }
 
                     $importedCount++;
                 }
@@ -686,11 +719,28 @@ class ImportExportController extends Controller
                 }
             } else {
                 foreach ($slice as $row) {
-                    $employee = Employee::firstOrNew(['nip' => $row['nip']]);
+                    $addressParts = array_filter([
+                        $row['address'] ?? null,
+                        (!empty($row['rt']) || !empty($row['rw'])) ? 'RT ' . ($row['rt'] ?? '-') . ' / RW ' . ($row['rw'] ?? '-') : null,
+                        !empty($row['village']) ? 'Kel. ' . $row['village'] : null,
+                        !empty($row['district']) ? 'Kec. ' . $row['district'] : null,
+                        !empty($row['postal_code']) ? 'Kode Pos ' . $row['postal_code'] : null,
+                    ]);
+                    $fullAddress = !empty($addressParts) ? implode(', ', $addressParts) : ($row['address'] ?? null);
+
+                    if (!empty($row['nip'])) {
+                        $employee = Employee::firstOrNew(['nip' => $row['nip']]);
+                    } elseif (!empty($row['nuptk'])) {
+                        $employee = Employee::firstOrNew(['nuptk' => $row['nuptk']]);
+                    } else {
+                        $employee = new Employee();
+                    }
+
                     if (!$employee->exists) {
                         $employee->uuid = Str::uuid()->toString();
                     }
-                    $employee->nuptk = $row['nuptk'];
+                    $employee->nip = $row['nip'] ?: null;
+                    $employee->nuptk = $row['nuptk'] ?: null;
                     $employee->full_name = $row['full_name'];
                     $employee->gender = $row['gender'];
                     $employee->birth_place = $row['birth_place'];
@@ -699,12 +749,7 @@ class ImportExportController extends Controller
                     $employee->status = 'Aktif';
                     $employee->ptk_type = $row['ptk_type'];
                     $employee->employment_type = $row['status_kepegawaian'];
-                    $employee->address = $row['address'];
-                    $employee->rt = $row['rt'];
-                    $employee->rw = $row['rw'];
-                    $employee->village = $row['village'];
-                    $employee->district = $row['district'];
-                    $employee->postal_code = $row['postal_code'];
+                    $employee->address = $fullAddress;
                     $employee->phone = $row['phone'];
                     $employee->whatsapp = $row['whatsapp'];
                     $employee->email = $row['email'];
@@ -713,10 +758,11 @@ class ImportExportController extends Controller
                     // Login Account (Password default: Tanggal Lahir DDMMYYYY)
                     $birthDate = $employee->birth_date;
                     $defaultPassword = $birthDate ? date('dmY', strtotime($birthDate)) : 'Password123!';
-                    $employeeEmail = $employee->nip . '@smkn1-cirebon.sch.id';
+                    $loginIdentifier = $employee->nip ?: ($employee->nuptk ?: 'ptk_' . Str::slug($employee->full_name, '_'));
+                    $employeeEmail = $employee->email ?: ($loginIdentifier . '@smkn1-cirebon.sch.id');
 
                     $user = User::where('employee_id', $employee->id)
-                        ->orWhere('username', $employee->nip)
+                        ->orWhere('username', $loginIdentifier)
                         ->orWhere('email', $employeeEmail)
                         ->first();
 
@@ -724,7 +770,7 @@ class ImportExportController extends Controller
                         User::create([
                             'name' => $employee->full_name,
                             'email' => $employeeEmail,
-                            'username' => $employee->nip,
+                            'username' => $loginIdentifier,
                             'role' => 'employee',
                             'employee_id' => $employee->id,
                             'password' => $defaultPassword,
